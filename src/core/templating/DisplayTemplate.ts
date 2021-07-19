@@ -1,6 +1,7 @@
-import * as ejs   from "ejs";
-import * as fs    from "fs";
-import * as path  from "path";
+import * as ejs     from "ejs";
+import * as fs      from "fs";
+import * as path    from "path";
+import * as process from "process";
 
 class DisplayTemplate {
     filename: string;
@@ -12,7 +13,8 @@ class DisplayTemplate {
     }
 
     render() {
-        const templatePath = path.join(__dirname,'..', 'views', `${this.filename}.ejs`);
+        const rootFolder   = path.resolve('./');
+        const templatePath = path.join(rootFolder, 'build', 'views', `${this.filename}.ejs`);
         const values = { entries: this.entries };
         const template = fs.readFileSync(templatePath, 'utf8');
         return ejs.render(template, values);

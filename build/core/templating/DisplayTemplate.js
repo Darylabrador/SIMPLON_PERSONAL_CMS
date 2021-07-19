@@ -28,7 +28,8 @@ var DisplayTemplate = /** @class */ (function () {
         this.entries = entries;
     }
     DisplayTemplate.prototype.render = function () {
-        var templatePath = path.join(__dirname, '..', 'views', this.filename + ".ejs");
+        var rootFolder = path.resolve('./');
+        var templatePath = path.join(rootFolder, 'build', 'views', this.filename + ".ejs");
         var values = { entries: this.entries };
         var template = fs.readFileSync(templatePath, 'utf8');
         return ejs.render(template, values);
