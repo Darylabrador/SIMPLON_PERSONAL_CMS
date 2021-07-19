@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "build": "rimraf ./build && tsc && cp -R src/views build",
-    "start:dev": "nodemon",
+    "watch": "npm run build && nodemon build/app.js",
     "start": "npm run build && node build/app.js"
   },
   "author": "",

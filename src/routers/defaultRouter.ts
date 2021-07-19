@@ -1,20 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import * as ejs   from "ejs";
-import * as fs    from "fs";
-import * as path  from "path";
-
-/**
- * Display page content
- * @param {object} entries
- * 
- */
-const displayPage = (entries: object) => {
-    const templatePath = path.join(__dirname,'..', 'views', 'template.ejs');
-    const values = { entries };
-    const template = fs.readFileSync(templatePath, 'utf8');
-    return ejs.render(template, values);
-}
-
+import DisplayTemplate from '../utils/DisplayTemplate';
 
 /**
  * General router handler
@@ -26,9 +11,9 @@ const routerHandler = (request: IncomingMessage, response: ServerResponse) => {
         case '/': {
             if (request.method === 'GET') {
                 const entries = {title: "mon titre via ejs"};
-                const output  = displayPage(entries);
+                const output = new DisplayTemplate("index", entries); 
                 response.writeHead(200, {'Content-Type': 'text/html'});
-                response.end(output);
+                response.end(output.render());
                 return response.end();
             }
             break;

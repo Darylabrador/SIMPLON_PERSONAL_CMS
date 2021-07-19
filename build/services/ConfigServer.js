@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var http_1 = require("http");
+/**
+ * Singleton to initiate nodejs server
+ */
 var ConfigServer = /** @class */ (function () {
     function ConfigServer(port) {
         if (port)
