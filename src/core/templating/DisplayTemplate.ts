@@ -15,7 +15,7 @@ class DisplayTemplate {
     render() {
         const rootFolder   = path.resolve('./');
         const templatePath = path.join(rootFolder, 'build', 'views', `${this.filename}.ejs`);
-        const values = { entries: this.entries };
+        const values = { ...this.entries };
         const template = fs.readFileSync(templatePath, 'utf8');
         return ejs.render(template, values);
     }
