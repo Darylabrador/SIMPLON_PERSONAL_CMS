@@ -4,13 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rimraf ./build && tsc",
+    "build": "rimraf ./build && tsc && cp -R src/views build",
     "start:dev": "nodemon",
     "start": "npm run build && node build/app.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/ejs": "^3.0.7",
     "@types/node": "^16.3.3",
     "nodemon": "^2.0.12",
     "rimraf": "^3.0.2",

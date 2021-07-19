@@ -1,24 +1,8 @@
-import { createServer, IncomingMessage, ServerResponse } from 'http';
+import { createServer } from 'http';
+import routerhandler from "./routers/defaultRouter";
 
 const port = 3000;
 
-const server = createServer((request: IncomingMessage, response: ServerResponse) => {
-    switch (request.url) {
-        case '/': {
-            if (request.method === 'GET') {
-                response.write('<html>');
-                response.write('<head> <title> TypeScript CMS </title></head>');
-                response.write('<body><p> Node JS + TypeScript </p></body>');
-                response.write('</html>');
-                return response.end();
-            }
-            break;
-        }
-        default: {
-            response.statusCode = 404;
-            response.end();
-        }
-    }
-});
+const server = createServer(routerhandler);
 
 server.listen(port);
