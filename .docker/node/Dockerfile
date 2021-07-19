@@ -1,3 +1,3 @@
 FROM node:14-stretch
-WORKDIR /home/node/app/
+WORKDIR /var/www/
 EXPOSE 3000

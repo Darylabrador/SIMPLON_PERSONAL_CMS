@@ -1,10 +1,4 @@
-var express = require("express");
-var app     = express();
-
-app.listen(3000);
-
-app.get("/", function (request, response) {
-  response.send("test");
-});
-
-console.log('server open');
+const http   = require('http');
+const routes = require('./routes');
+const server = http.createServer(routes.handler);
+server.listen(3000);
