@@ -4,7 +4,7 @@
 
 - nodejs / typescript
 - mysql
-- jsx
+- ejs (view templating)
 
 ## Prérequis
 
