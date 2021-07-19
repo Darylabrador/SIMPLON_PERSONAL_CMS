@@ -5,7 +5,7 @@ services:
     build:
       context: .docker/node
     working_dir: /var/www/
-    command: node app.js
+    command: node ./build/app.js
     links:
       - mysql
     volumes:

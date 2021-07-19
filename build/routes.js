@@ -1,14 +1,13 @@
-const fs = require('fs');
-
+"use strict";
+var fs = require('fs');
 /**
  * Simplification du routage de app.js
- * @param {object} req 
- * @param {object} res 
+ * @param {object} req
+ * @param {object} res
  */
-const requestHandler = (req, res) => {
-    const url    = req.url;
-    const method = req.method;
-
+var requestHandler = function (req, res) {
+    var url = req.url;
+    var method = req.method;
     if (url === "/") {
         res.write('<html>');
         res.write('<head> <title> CMS </title></head>');
@@ -17,5 +16,4 @@ const requestHandler = (req, res) => {
         return res.end();
     }
 };
-
 exports.handler = requestHandler;
