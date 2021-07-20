@@ -20,7 +20,7 @@ class Routes {
         });
 
         Router.get('/account', ExampleController.getAccount);
-        
+         
         Router.get('/settings', ExampleController.getSettings);
     }
 }

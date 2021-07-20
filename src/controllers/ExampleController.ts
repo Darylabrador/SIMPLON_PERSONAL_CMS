@@ -3,11 +3,16 @@ import Viewer from "../core/templating/Viewer";
 
 class ExampleController {
     public static getAccount(): void {
-        Viewer.render('template', {title: "account"})
+        const data = {
+            name: "John",
+            surname: "DOE",
+            email: "johndoe@gmail.com"
+        }
+        Viewer.renderAPI(data)
     }
 
     public static getSettings(): void {
-        Viewer.renderAPI({title: "Settings"})
+        Viewer.render('template', {title: "Setting page"})
     }
 }
 

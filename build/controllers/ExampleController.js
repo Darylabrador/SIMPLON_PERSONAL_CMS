@@ -8,10 +8,15 @@ var ExampleController = /** @class */ (function () {
     function ExampleController() {
     }
     ExampleController.getAccount = function () {
-        Viewer_1.default.render('template', { title: "account" });
+        var data = {
+            name: "John",
+            surname: "DOE",
+            email: "johndoe@gmail.com"
+        };
+        Viewer_1.default.renderAPI(data);
     };
     ExampleController.getSettings = function () {
-        Viewer_1.default.renderAPI({ title: "Settings" });
+        Viewer_1.default.render('template', { title: "Setting page" });
     };
     return ExampleController;
 }());
