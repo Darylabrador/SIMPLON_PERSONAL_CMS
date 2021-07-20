@@ -1,6 +1,3 @@
-import * as fs from "fs";
-import * as path from "path";
-
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import Router from '../routing/Router';
 import Viewer from "../templating/Viewer";

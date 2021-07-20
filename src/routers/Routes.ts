@@ -1,7 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import Router from '../core/routing/Router';
-import Rendering from '../core/templating/Viewer';
-
 import ExampleController from '../controllers/ExampleController';
 
 class Routes {

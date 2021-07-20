@@ -1,7 +1,6 @@
 import * as ejs     from "ejs";
 import * as fs      from "fs";
 import * as path    from "path";
-import { ServerResponse } from 'http';
 import ConfigServer from "../server/ConfigServer";
 
 class Viewer {
