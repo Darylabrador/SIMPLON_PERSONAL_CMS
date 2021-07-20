@@ -1,7 +1,6 @@
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import { MethodsEnum } from "./MethodsEnum";
 import Route from "./Route";
-import Rendering from "../templating/Rendering";
 
 class Router {
     private static instance: Router;
@@ -35,30 +34,8 @@ class Router {
         this.getInstance().createRoute(MethodsEnum.Delete, url, callback)
     }
 
-    public static check(request: IncomingMessage, response: ServerResponse) {
-        const method        = request.method;
-        const url           = request.url;
-        const findRoute     = this.getInstance().routes.find(element => element.method === method && element.url == url);
-        
-        if(findRoute){
-            if(findRoute.callback()) {
-                const data = findRoute.callback();
-                if(data.view) {
-                    const output = new Rendering(data.view, data.payload); 
-                    response.writeHead(200, {'Content-Type': 'text/html'});
-                    response.end(output.web());
-                    return response.end(); 
-                } else {
-                    response.setHeader('Content-Type', 'application/json');
-                    response.end(JSON.stringify({...data.payload}));
-                }
-            }
-        } else {
-            const output = new Rendering("error", {}); 
-            response.writeHead(200, {'Content-Type': 'text/html'});
-            response.end(output.web());
-            return response.end();
-        }
+    public static getAll() {
+        return this.getInstance().routes;
     }
 }
 
