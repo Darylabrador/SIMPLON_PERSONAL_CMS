@@ -1,18 +1,28 @@
-import { createServer } from 'http';
+import { createServer, IncomingMessage, ServerResponse } from 'http';
+import Router from '../routing/Router';
 
-/**
- * Singleton to initiate nodejs server
- */
 class ConfigServer {
-    port: number;
+    private static instance: ConfigServer;
+    port: number = 3000;
 
-    constructor(port?: number){
-        if(port) this.port = port;
-        else     this.port = 3000;
+    private constructor(){}
+
+    private static getInstance(): ConfigServer {
+        if(!this.instance) {
+            this.instance = new ConfigServer();
+        }
+        return this.instance;
     }
 
-    init(routingList: any) {
-        return createServer(routingList).listen(this.port)
+    private startServer() {
+        let server = createServer((request: IncomingMessage, response: ServerResponse) => {
+            Router.check(request, response);
+        })
+        server.listen(this.port);
+    }
+
+    public static start() {
+        this.getInstance().startServer()
     }
 }
 

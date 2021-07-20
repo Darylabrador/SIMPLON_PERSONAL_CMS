@@ -1,21 +1,17 @@
-type route = { url: string, payload: object, view: string, method: string };
+type route = { payload: object, view?: string };
 
 class ExampleController {
     getIndexPage(): route {
         return {
-            url: '/',
-            payload: {title: "Page d'ccueil"},
-            view: 'template',
-            method: 'GET'
+            payload: { title: "Page d'accueil" },
+            view: 'template'
         }
     }
-    
+
     getContactpage(): route {
         return {
-            url: '/contact',
-            payload: {title: "Page de contact"},
+            payload: { title: "Page de contact" },
             view: 'template',
-            method: 'GET'
         }
     }
 }

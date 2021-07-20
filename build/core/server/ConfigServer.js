@@ -1,18 +1,28 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var http_1 = require("http");
-/**
- * Singleton to initiate nodejs server
- */
+var Router_1 = __importDefault(require("../routing/Router"));
 var ConfigServer = /** @class */ (function () {
-    function ConfigServer(port) {
-        if (port)
-            this.port = port;
-        else
-            this.port = 3000;
+    function ConfigServer() {
+        this.port = 3000;
     }
-    ConfigServer.prototype.init = function (routingList) {
-        return http_1.createServer(routingList).listen(this.port);
+    ConfigServer.getInstance = function () {
+        if (!this.instance) {
+            this.instance = new ConfigServer();
+        }
+        return this.instance;
+    };
+    ConfigServer.prototype.startServer = function () {
+        var server = http_1.createServer(function (request, response) {
+            Router_1.default.check(request, response);
+        });
+        server.listen(this.port);
+    };
+    ConfigServer.start = function () {
+        this.getInstance().startServer();
     };
     return ConfigServer;
 }());

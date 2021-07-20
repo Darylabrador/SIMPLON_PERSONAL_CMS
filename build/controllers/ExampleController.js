@@ -5,18 +5,14 @@ var ExampleController = /** @class */ (function () {
     }
     ExampleController.prototype.getIndexPage = function () {
         return {
-            url: '/',
-            payload: { title: "Page d'ccueil" },
-            view: 'template',
-            method: 'GET'
+            payload: { title: "Page d'accueil" },
+            view: 'template'
         };
     };
     ExampleController.prototype.getContactpage = function () {
         return {
-            url: '/contact',
             payload: { title: "Page de contact" },
             view: 'template',
-            method: 'GET'
         };
     };
     return ExampleController;

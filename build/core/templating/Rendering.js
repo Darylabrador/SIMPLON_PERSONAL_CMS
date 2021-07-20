@@ -33,18 +33,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ejs = __importStar(require("ejs"));
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
-var DisplayTemplate = /** @class */ (function () {
-    function DisplayTemplate(filename, entries) {
+var Rendering = /** @class */ (function () {
+    function Rendering(filename, entries) {
         this.filename = filename;
         this.entries = entries;
     }
-    DisplayTemplate.prototype.render = function () {
+    Rendering.prototype.web = function () {
         var rootFolder = path.resolve('./');
         var templatePath = path.join(rootFolder, 'build', 'views', this.filename + ".ejs");
         var values = __assign({}, this.entries);
         var template = fs.readFileSync(templatePath, 'utf8');
         return ejs.render(template, values);
     };
-    return DisplayTemplate;
+    return Rendering;
 }());
-exports.default = DisplayTemplate;
+exports.default = Rendering;

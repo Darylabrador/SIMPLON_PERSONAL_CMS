@@ -1,9 +1,8 @@
 import * as ejs     from "ejs";
 import * as fs      from "fs";
 import * as path    from "path";
-import * as process from "process";
 
-class DisplayTemplate {
+class Rendering {
     filename: string;
     entries: object;
 
@@ -12,7 +11,7 @@ class DisplayTemplate {
         this.entries = entries;
     }
 
-    render() {
+    web() {
         const rootFolder   = path.resolve('./');
         const templatePath = path.join(rootFolder, 'build', 'views', `${this.filename}.ejs`);
         const values = { ...this.entries };
@@ -21,4 +20,4 @@ class DisplayTemplate {
     }
 }
 
-export default DisplayTemplate;
+export default Rendering;
