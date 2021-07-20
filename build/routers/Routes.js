@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Router_1 = __importDefault(require("../core/routing/Router"));
+var ExampleController_1 = __importDefault(require("../controllers/ExampleController"));
 var Routes = /** @class */ (function () {
     function Routes() {
     }
@@ -19,6 +20,8 @@ var Routes = /** @class */ (function () {
                 payload: { title: "Contact page" }
             };
         });
+        Router_1.default.get('/account', ExampleController_1.default.getAccount);
+        Router_1.default.get('/settings', ExampleController_1.default.getSettings);
     };
     return Routes;
 }());

@@ -1,6 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import Router from '../core/routing/Router';
-import Rendering from '../core/templating/Rendering';
+import Rendering from '../core/templating/Viewer';
+
+import ExampleController from '../controllers/ExampleController';
 
 class Routes {
     static build() {
@@ -16,6 +18,10 @@ class Routes {
                 payload: { title: "Contact page" }
             }
         });
+
+        Router.get('/account', ExampleController.getAccount);
+        
+        Router.get('/settings', ExampleController.getSettings);
     }
 }
 

@@ -1,43 +1,47 @@
+import * as fs from "fs";
+import * as path from "path";
+
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 import Router from '../routing/Router';
-import Rendering from "../templating/Rendering";
+import Viewer from "../templating/Viewer";
 
 class ConfigServer {
     private static instance: ConfigServer;
     port: number = 3000;
+    SERVER_RESPONSE: any;
 
-    private constructor(){}
+    private constructor() { }
 
     private static getInstance(): ConfigServer {
-        if(!this.instance) {
+        if (!this.instance) {
             this.instance = new ConfigServer();
         }
         return this.instance;
     }
 
+    public static getResponse() {
+        return this.getInstance().SERVER_RESPONSE;
+    }
+
     private check(request: IncomingMessage, response: ServerResponse) {
-        const method        = request.method;
-        const url           = request.url;
-        const findRoute     = Router.getAll().find(element => element.method === method && element.url == url);
-        
-        if(findRoute){
-            if(findRoute.callback()) {
-                const data = findRoute.callback();
-                if(data.view) {
-                    const output = new Rendering(data.view, data.payload); 
-                    response.writeHead(200, {'Content-Type': 'text/html'});
-                    response.end(output.web());
-                    return response.end(); 
-                } else {
-                    response.setHeader('Content-Type', 'application/json');
-                    response.end(JSON.stringify({...data.payload}));
+        const method = request.method;
+        const url    = request.url;
+        const findRoute = Router.getAll().find(element => element.method === method && element.url == url);
+        this.SERVER_RESPONSE = response;
+
+        if (findRoute) {
+            if (typeof findRoute.callback === "function") {
+                if (findRoute.callback()) {
+                    const data = findRoute.callback();
+                    if (data.view) {
+                        Viewer.render(data.view, data.payload);
+                    } else {
+                        Viewer.renderAPI({ entries: data.payload });
+                    }
                 }
             }
         } else {
-            const output = new Rendering("error", {}); 
-            response.writeHead(200, {'Content-Type': 'text/html'});
-            response.end(output.web());
-            return response.end();
+            Viewer.render("error", {});;
         }
     }
 

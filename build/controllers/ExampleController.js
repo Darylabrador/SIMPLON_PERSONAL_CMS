@@ -1,19 +1,17 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var Viewer_1 = __importDefault(require("../core/templating/Viewer"));
 var ExampleController = /** @class */ (function () {
     function ExampleController() {
     }
-    ExampleController.prototype.getIndexPage = function () {
-        return {
-            payload: { title: "Page d'accueil" },
-            view: 'template'
-        };
+    ExampleController.getAccount = function () {
+        Viewer_1.default.render('template', { title: "account" });
     };
-    ExampleController.prototype.getContactpage = function () {
-        return {
-            payload: { title: "Page de contact" },
-            view: 'template',
-        };
+    ExampleController.getSettings = function () {
+        Viewer_1.default.renderAPI({ title: "Settings" });
     };
     return ExampleController;
 }());

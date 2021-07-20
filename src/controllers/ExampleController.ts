@@ -1,18 +1,13 @@
 type route = { payload: object, view?: string };
+import Viewer from "../core/templating/Viewer";
 
 class ExampleController {
-    getIndexPage(): route {
-        return {
-            payload: { title: "Page d'accueil" },
-            view: 'template'
-        }
+    public static getAccount(): void {
+        Viewer.render('template', {title: "account"})
     }
 
-    getContactpage(): route {
-        return {
-            payload: { title: "Page de contact" },
-            view: 'template',
-        }
+    public static getSettings(): void {
+        Viewer.renderAPI({title: "Settings"})
     }
 }
 

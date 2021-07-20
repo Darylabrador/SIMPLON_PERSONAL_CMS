@@ -29,22 +29,33 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var ejs = __importStar(require("ejs"));
 var fs = __importStar(require("fs"));
 var path = __importStar(require("path"));
-var Rendering = /** @class */ (function () {
-    function Rendering(filename, entries) {
-        this.filename = filename;
-        this.entries = entries;
+var ConfigServer_1 = __importDefault(require("../server/ConfigServer"));
+var Viewer = /** @class */ (function () {
+    function Viewer() {
     }
-    Rendering.prototype.web = function () {
+    Viewer.render = function (filename, entries) {
+        var response = ConfigServer_1.default.getResponse();
         var rootFolder = path.resolve('./');
-        var templatePath = path.join(rootFolder, 'build', 'views', this.filename + ".ejs");
-        var values = __assign({}, this.entries);
+        var templatePath = path.join(rootFolder, 'build', 'views', filename + ".ejs");
+        var values = __assign({}, entries);
         var template = fs.readFileSync(templatePath, 'utf8');
-        return ejs.render(template, values);
+        var output = ejs.render(template, values);
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.end(output);
+        return response.end();
     };
-    return Rendering;
+    Viewer.renderAPI = function (entries) {
+        var response = ConfigServer_1.default.getResponse();
+        response.setHeader('Content-Type', 'application/json');
+        return response.end(JSON.stringify(__assign({}, entries)));
+    };
+    return Viewer;
 }());
-exports.default = Rendering;
+exports.default = Viewer;
