@@ -1,10 +1,12 @@
 import Article from "../models/Article";
-import Database from "../core/config/Database";
 
 class ArticleController {
     public static async getArticles() {
-        const articles = await Database.query("SELECT * FROM articles", [])
-        return articles;
+        return Article.findAll();
+    }
+
+    public static async getSingleArticle() {
+        return Article.findByPk(1);
     }
 }
 

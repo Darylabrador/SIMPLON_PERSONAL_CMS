@@ -31,6 +31,7 @@ var Routes = /** @class */ (function () {
         });
         Router_1.default.get('/settings', ExampleController_1.default.getSettings);
         Router_1.default.get('/articles', ArticleController_1.default.getArticles);
+        Router_1.default.get('/article/1', ArticleController_1.default.getSingleArticle);
     };
     return Routes;
 }());

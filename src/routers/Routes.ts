@@ -28,6 +28,7 @@ class Routes {
         
         Router.get('/settings', ExampleController.getSettings);
         Router.get('/articles', ArticleController.getArticles);
+        Router.get('/article/1', ArticleController.getSingleArticle);
     }
 }
 

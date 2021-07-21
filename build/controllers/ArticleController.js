@@ -39,21 +39,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Database_1 = __importDefault(require("../core/config/Database"));
+var Article_1 = __importDefault(require("../models/Article"));
 var ArticleController = /** @class */ (function () {
     function ArticleController() {
     }
     ArticleController.getArticles = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var articles;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, Database_1.default.query("SELECT * FROM articles", [])];
-                    case 1:
-                        articles = _a.sent();
-                        console.log(articles);
-                        return [2 /*return*/, articles];
-                }
+                return [2 /*return*/, Article_1.default.findAll()];
+            });
+        });
+    };
+    ArticleController.getSingleArticle = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, Article_1.default.findByPk(1)];
             });
         });
     };

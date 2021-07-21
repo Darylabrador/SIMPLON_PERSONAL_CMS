@@ -1,6 +1,6 @@
 import Database from "../config/Database";
 
-abstract class Model {
+class Model {
     name: string;
     fields: Array<object> = [];
 
@@ -9,15 +9,25 @@ abstract class Model {
         this.fields = fields;
     }
 
-    // findAll() {
-    //     Database.query(
-    //         `SELECT * FROM ${this.name}`,
-    //         function(err: any, results: any) {
-    //             if(err) return console.log(err)
-    //             return results;
-    //         }
-    //     )
-    // }
+    async findAll() {
+        try {
+            const requestData = await Database.query("SELECT * FROM articles", [])
+            return requestData;
+        } catch (error) {
+            console.log("Error in Abstract Model")
+            console.log(error);
+        }
+    }
+
+    async findByPk(id: Number) {
+        try {
+            const requestData = await Database.query("SELECT * FROM articles where id = ?", [id])
+            return requestData;
+        } catch (error) {
+            console.log("Error in Abstract Model")
+            console.log(error);
+        }
+    }
 }
 
 export default Model;
