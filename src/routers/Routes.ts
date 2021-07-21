@@ -1,5 +1,6 @@
 import Router from '../core/routing/Router';
 import ExampleController from '../controllers/ExampleController';
+import AccountController from '../controllers/AccountController';
 
 class Routes {
     static build() {
@@ -10,15 +11,23 @@ class Routes {
             }
         });
 
+        Router.get('/joindre', () => {
+            return {
+                payload: [{ 
+                    title: "Joindre page",
+                    content: "Joindre content"
+                }]
+            }
+        });
+
         Router.get('/contact', () => {
             return {
                 payload: { title: "Contact page" }
             }
         });
-
-        Router.get('/account', ExampleController.getAccount);
-         
+        
         Router.get('/settings', ExampleController.getSettings);
+        Router.get('/account', AccountController.getAccount);
     }
 }
 

@@ -1,5 +1,5 @@
-import ConfigServer from "./core/server/ConfigServer";
+import Server from "./core/server/Server";
 import Routes from "./routers/Routes";
 
 Routes.build();
-ConfigServer.start();
+Server.start();
