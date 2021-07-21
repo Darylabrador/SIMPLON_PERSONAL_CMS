@@ -11,25 +11,30 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var ResponseTypeEnum_1 = require("../enum/ResponseTypeEnum");
 var Response = /** @class */ (function () {
     function Response(response) {
         this.SERVER_RESPONSE = response;
     }
     ;
-    Response.prototype.handler = function (content) {
-        if (typeof content == "string") {
+    Response.prototype.setHeader = function () {
+        if (typeof this.saveContent == ResponseTypeEnum_1.ResponseTypeEnum.String)
             this.SERVER_RESPONSE.writeHead(200, { 'Content-Type': 'text/html' });
-            this.SERVER_RESPONSE.end(content);
-            this.SERVER_RESPONSE.end();
-        }
-        else if (typeof content === "object") {
+        else if (typeof this.saveContent === ResponseTypeEnum_1.ResponseTypeEnum.Object)
             this.SERVER_RESPONSE.setHeader('Content-Type', 'application/json');
-            this.SERVER_RESPONSE.end(JSON.stringify(__assign({}, content)));
-        }
-        else {
-            this.SERVER_RESPONSE.statusCode = 500;
-            this.SERVER_RESPONSE.end(JSON.stringify({ error: "La réponse est incorrect" }));
-        }
+    };
+    Response.prototype.setReponse = function () {
+        var responseContent;
+        if (typeof this.saveContent == ResponseTypeEnum_1.ResponseTypeEnum.String)
+            responseContent = this.saveContent;
+        else if (typeof this.saveContent === ResponseTypeEnum_1.ResponseTypeEnum.Object)
+            responseContent = JSON.stringify(__assign({}, this.saveContent));
+        return this.SERVER_RESPONSE.end(responseContent);
+    };
+    Response.prototype.handler = function (content) {
+        this.saveContent = content;
+        this.setHeader();
+        this.setReponse();
     };
     return Response;
 }());

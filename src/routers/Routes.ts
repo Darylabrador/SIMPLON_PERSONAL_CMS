@@ -1,6 +1,6 @@
 import Router from '../core/routing/Router';
 import ExampleController from '../controllers/ExampleController';
-import AccountController from '../controllers/AccountController';
+import ArticleController from '../controllers/ArticleController';
 
 class Routes {
     static build() {
@@ -27,7 +27,7 @@ class Routes {
         });
         
         Router.get('/settings', ExampleController.getSettings);
-        Router.get('/account', AccountController.getAccount);
+        Router.get('/articles', ArticleController.getArticles);
     }
 }
 

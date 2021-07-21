@@ -1,4 +1,4 @@
-import { MethodsEnum } from "./MethodsEnum";
+import { MethodsEnum } from "../enum/MethodsEnum";
 import Route from "./Route";
 
 class Router {

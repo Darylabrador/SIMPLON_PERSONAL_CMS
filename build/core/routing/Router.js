@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var MethodsEnum_1 = require("./MethodsEnum");
+var MethodsEnum_1 = require("../enum/MethodsEnum");
 var Route_1 = __importDefault(require("./Route"));
 var Router = /** @class */ (function () {
     function Router() {
