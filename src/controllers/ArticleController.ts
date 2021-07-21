@@ -2,14 +2,9 @@ import Article from "../models/Article";
 import Database from "../core/config/Database";
 
 class ArticleController {
-    public static getArticles(): any {
-        Database.query(
-            'SELECT * FROM `articles`',
-            function(err: any, results: any) {
-                if(err) return console.log(err);
-                return console.log(results);
-            }
-        )
+    public static async getArticles() {
+        const articles = await Database.query("SELECT * FROM articles", [])
+        return articles;
     }
 }
 

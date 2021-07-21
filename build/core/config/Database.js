@@ -37,9 +37,16 @@ var Database = /** @class */ (function () {
             password: process.env.MYSQL_PASSWORD
         });
     };
-    Database.query = function (query, callback) {
+    Database.query = function (sqlQuery, params) {
         var db = this.connection();
-        return db.query(query, callback);
+        return new Promise(function (resolve, reject) {
+            db.query(sqlQuery, params, function (err, rows, fields) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(rows);
+            });
+        });
     };
     return Database;
 }());

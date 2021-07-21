@@ -17,12 +17,12 @@ class Server {
         return this.instance;
     }
 
-    private check(request: any, response: any) {
+    private async check(request: any, response: any) {
         const findRoute      = Router.getAll().find(element => element.method === request.method && element.url == request.url);
         if (findRoute) {
             if (typeof findRoute.callback === "function") {
                 if (findRoute.callback()) {
-                    const data = findRoute.callback();
+                    const data = await findRoute.callback();
                     
                     if(typeof data == "string") {
                         response.handler(data)

@@ -9,15 +9,15 @@ abstract class Model {
         this.fields = fields;
     }
 
-    findAll() {
-        Database.query(
-            `SELECT * FROM ${this.name}`,
-            function(err: any, results: any) {
-                if(err) return console.log(err)
-                return results;
-            }
-        )
-    }
+    // findAll() {
+    //     Database.query(
+    //         `SELECT * FROM ${this.name}`,
+    //         function(err: any, results: any) {
+    //             if(err) return console.log(err)
+    //             return results;
+    //         }
+    //     )
+    // }
 }
 
 export default Model;
