@@ -71,18 +71,22 @@ var Server = /** @class */ (function () {
     Server.prototype.check = function (request, response) {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var baseURI, path, paramRoute, findRoute, data, viewContent, returningData, params_1, query, findParamRoute, data, viewContent, returningData, viewContent, viewContent;
+            var baseURI, path, params, query, findRoute, data, viewContent, returningData, viewContent;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         baseURI = url_1.default.parse(request.url, true);
                         path = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
-                        paramRoute = Router_1.default.getAll().filter(function (element) { return element.url.match(':id') && element.method == request.method; });
-                        findRoute = Router_1.default.getAll().find(function (element) { return element.method === request.method && element.url == request.url; });
+                        params = this.getParams(path);
+                        query = this.getQuery(baseURI);
+                        findRoute = Router_1.default.getAll().find(function (element) {
+                            return (element.url.match(baseURI.path) && element.method == request.method) ||
+                                (element.url.match(':id', params) && element.url.replace(':id', params) == baseURI.path && element.method == request.method);
+                        });
                         if (!findRoute) return [3 /*break*/, 3];
                         if (!(typeof findRoute.callback === "function")) return [3 /*break*/, 2];
                         if (!findRoute.callback()) return [3 /*break*/, 2];
-                        return [4 /*yield*/, findRoute.callback()];
+                        return [4 /*yield*/, findRoute.callback(params, query)];
                     case 1:
                         data = _b.sent();
                         if (typeof data == "string") {
@@ -101,45 +105,12 @@ var Server = /** @class */ (function () {
                             response.handler({ entries: returningData });
                         }
                         _b.label = 2;
-                    case 2: return [3 /*break*/, 9];
+                    case 2: return [3 /*break*/, 4];
                     case 3:
-                        if (!paramRoute) return [3 /*break*/, 8];
-                        params_1 = this.getParams(path);
-                        query = this.getQuery(baseURI);
-                        findParamRoute = paramRoute.find(function (element) { return element.url.replace(':id', params_1) == baseURI.path && element.method == request.method; });
-                        if (!findParamRoute) return [3 /*break*/, 6];
-                        if (!(typeof findParamRoute.callback === "function")) return [3 /*break*/, 5];
-                        if (!findParamRoute.callback()) return [3 /*break*/, 5];
-                        return [4 /*yield*/, findParamRoute.callback(params_1)];
-                    case 4:
-                        data = _b.sent();
-                        if (typeof data == "string") {
-                            response.handler(data);
-                        }
-                        else if (data.view) {
-                            viewContent = Viewer_1.default.render(data.view, data.payload);
-                            response.handler(viewContent);
-                        }
-                        else {
-                            returningData = void 0;
-                            if (!data.payload)
-                                returningData = { data: data };
-                            else
-                                returningData = data.payload;
-                            response.handler({ entries: returningData });
-                        }
-                        _b.label = 5;
-                    case 5: return [3 /*break*/, 7];
-                    case 6:
                         viewContent = Viewer_1.default.render("error", {});
                         response.handler(viewContent);
-                        _b.label = 7;
-                    case 7: return [3 /*break*/, 9];
-                    case 8:
-                        viewContent = Viewer_1.default.render("error", {});
-                        response.handler(viewContent);
-                        _b.label = 9;
-                    case 9: return [2 /*return*/];
+                        _b.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
         });

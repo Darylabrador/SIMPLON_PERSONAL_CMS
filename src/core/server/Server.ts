@@ -38,14 +38,18 @@ class Server {
     private async check(request: any, response: any) {
         let baseURI = url.parse(request.url, true);
         let path    = baseURI.pathname?.split('/');
+        let params  = this.getParams(path);
+        let query   = this.getQuery(baseURI);
 
-        const paramRoute = Router.getAll().filter(element => element.url.match(':id') && element.method == request.method);
-        const findRoute = Router.getAll().find(element => element.method === request.method && element.url == request.url);
+        let findRoute = Router.getAll().find(element =>
+            (element.url.match(baseURI.path) && element.method == request.method) ||
+            (element.url.match(':id', params) && element.url.replace(':id', params) == baseURI.path && element.method == request.method)
+        );
 
         if (findRoute) {
             if (typeof findRoute.callback === "function") {
                 if (findRoute.callback()) {
-                    const data = await findRoute.callback();
+                    const data = await findRoute.callback(params, query);
                     if (typeof data == "string") {
                         response.handler(data)
                     } else if (data.view) {
@@ -59,33 +63,6 @@ class Server {
                     }
                 }
             }
-        } else if(paramRoute) {
-            let params  = this.getParams(path);
-            let query   = this.getQuery(baseURI);
-
-            const findParamRoute = paramRoute.find(element => element.url.replace(':id', params) == baseURI.path && element.method == request.method);
-            if(findParamRoute) {
-                if (typeof findParamRoute.callback === "function") {
-                    if (findParamRoute.callback()) {
-                        const data = await findParamRoute.callback(params);
-                        if (typeof data == "string") {
-                            response.handler(data)
-                        } else if (data.view) {
-                            const viewContent = Viewer.render(data.view, data.payload);
-                            response.handler(viewContent)
-                        } else {
-                            let returningData;
-                            if (!data.payload) returningData = { data }
-                            else returningData = data.payload
-                            response.handler({ entries: returningData });
-                        }
-                    }
-                }
-            } else {
-                const viewContent = Viewer.render("error", {});
-                response.handler(viewContent)
-            }
-
         } else {
             const viewContent = Viewer.render("error", {});
             response.handler(viewContent)
