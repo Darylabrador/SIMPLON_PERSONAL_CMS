@@ -48,8 +48,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Database_1 = __importDefault(require("./Database"));
 var Query = /** @class */ (function () {
-    function Query(table) {
+    function Query(table, fields) {
+        this.fields = [];
+        this.searchFields = "";
         this.table = table;
+        this.fields = fields;
+        this.searchFields += fields[0].field;
+        for (var i = 1; i < fields.length; i++) {
+            this.searchFields += ", " + fields[i].field;
+        }
     }
     Query.prototype.findAll = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -57,17 +64,20 @@ var Query = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT * FROM " + this.table, [])];
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, console.log(this.searchFields)];
                     case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Database_1.default.query("SELECT " + this.searchFields + " FROM " + this.table, [])];
+                    case 2:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
-                    case 2:
+                    case 3:
                         error_1 = _a.sent();
                         console.log("Error in class query: findAll()");
                         console.log(error_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
@@ -78,17 +88,20 @@ var Query = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT * FROM " + this.table + " where id = ?", [id])];
+                        _a.trys.push([0, 3, , 4]);
+                        return [4 /*yield*/, console.log(this.searchFields)];
                     case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Database_1.default.query("SELECT " + this.searchFields + " FROM " + this.table + " where id = ?", [id])];
+                    case 2:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
-                    case 2:
+                    case 3:
                         error_2 = _a.sent();
                         console.log("Error in class query: find()");
                         console.log(error_2);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });

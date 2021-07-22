@@ -41,14 +41,19 @@ class Server {
         let params  = this.getParams(path);
         let query   = this.getQuery(baseURI);
 
+        // let allRoutes = Router.getAll().filter(element => baseURI.pathname?.match(element.url));
+        // console.log(allRoutes)
+
         let findRoute = Router.getAll().find(element =>
             (element.url.match(baseURI.path) && element.method == request.method) ||
-            (element.url.match(':id', params) && element.url.replace(':id', params) == baseURI.path && element.method == request.method)
+            (element.url.match('[^\:]*', params) && element.url.replace(':id', params) == baseURI.path && element.method == request.method)
         );
 
         if (findRoute) {
             if (typeof findRoute.callback === "function") {
                 if (findRoute.callback()) {
+                    await request.setParams(params);
+                    await request.setQuery(query);
                     const data = await findRoute.callback(params, query);
                     if (typeof data == "string") {
                         response.handler(data)

@@ -11,7 +11,11 @@ import { FieldTypes } from "../../core/enum/FieldTypes";
 
 class Article extends Model implements ModelInterface {
     table: string = 'articles';
-    fields: Array<FieldInterface> = [];
+    fields: Array<FieldInterface> = [
+        { field: "id", type: FieldTypes.Number },
+        { field: "title", type: FieldTypes.String },
+        { field: "content", type: FieldTypes.String },
+    ];
 }
 
 const article = new Article('articles', [

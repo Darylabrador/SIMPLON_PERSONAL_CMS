@@ -17,16 +17,16 @@ abstract class Model {
     constructor(table: string, fields: Array<FieldInterface>) {
         this.table   = table;
         this.fields  = fields;
-        this.query   = new Query(table)
+        this.query   = new Query(table, fields)
     }
 
     public findAll() {
-        const query = new Query(this.table); 
+        const query = new Query(this.table, this.fields); 
         return query.findAll();
     }
 
     public find(id: Number) {
-        const query = new Query(this.table); 
+        const query = new Query(this.table, this.fields); 
         return query.find(id);
     }
 }

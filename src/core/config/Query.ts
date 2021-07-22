@@ -6,18 +6,30 @@
  * @author Daryl ABRADOR
  */
 
+ import FieldInterface from "../interfaces/FieldInterface";
 import Database from "./Database";
 
 class Query {
     table: string;
+    fields: Array<FieldInterface> = [];
+    searchFields: string = "";
 
-    constructor(table: string) {
+    constructor(table: string, fields: Array<FieldInterface>) {
         this.table = table;
+        this.fields = fields;
+
+        this.searchFields += fields[0].field;
+
+        for(let i = 1; i < fields.length; i++) {
+            this.searchFields += `, ${fields[i].field}`
+        }
+        
+  
     }
 
     async findAll() {
         try {
-            const requestData = await Database.query(`SELECT * FROM ${this.table}`, [])
+            const requestData = await Database.query(`SELECT ${this.searchFields} FROM ${this.table}`, [])
             return requestData;
         } catch (error) {
             console.log("Error in class query: findAll()")
@@ -27,7 +39,7 @@ class Query {
 
     async find(id: Number) {
         try {
-            const requestData = await Database.query(`SELECT * FROM ${this.table} where id = ?`, [id])
+            const requestData = await Database.query(`SELECT ${this.searchFields} FROM ${this.table} where id = ?`, [id])
             return requestData;
         } catch (error) {
             console.log("Error in class query: find()")

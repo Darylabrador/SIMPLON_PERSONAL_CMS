@@ -8,10 +8,11 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var Route = /** @class */ (function () {
-    function Route(method, url, callback) {
+    function Route(method, url, callback, regexp) {
         this.method = method;
         this.url = url;
         this.callback = callback;
+        this.regexp = regexp;
     }
     return Route;
 }());

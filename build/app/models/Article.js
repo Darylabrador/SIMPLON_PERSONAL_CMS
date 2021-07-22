@@ -29,7 +29,11 @@ var Article = /** @class */ (function (_super) {
     function Article() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.table = 'articles';
-        _this.fields = [];
+        _this.fields = [
+            { field: "id", type: FieldTypes_1.FieldTypes.Number },
+            { field: "title", type: FieldTypes_1.FieldTypes.String },
+            { field: "content", type: FieldTypes_1.FieldTypes.String },
+        ];
         return _this;
     }
     return Article;

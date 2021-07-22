@@ -16,14 +16,14 @@ var Model = /** @class */ (function () {
         this.fields = [];
         this.table = table;
         this.fields = fields;
-        this.query = new Query_1.default(table);
+        this.query = new Query_1.default(table, fields);
     }
     Model.prototype.findAll = function () {
-        var query = new Query_1.default(this.table);
+        var query = new Query_1.default(this.table, this.fields);
         return query.findAll();
     };
     Model.prototype.find = function (id) {
-        var query = new Query_1.default(this.table);
+        var query = new Query_1.default(this.table, this.fields);
         return query.find(id);
     };
     return Model;
