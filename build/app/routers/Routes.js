@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Router_1 = __importDefault(require("../../core/routing/Router"));
 var ExampleController_1 = __importDefault(require("../controllers/ExampleController"));
-var ArticleController_1 = __importDefault(require("../controllers/ArticleController"));
 var Routes = /** @class */ (function () {
     function Routes() {
     }
@@ -16,25 +15,7 @@ var Routes = /** @class */ (function () {
                 payload: { title: "Page d'accueil" }
             };
         });
-        Router_1.default.get('/joindre', function () {
-            return {
-                payload: [{
-                        title: "Joindre page",
-                        content: "Joindre content"
-                    }]
-            };
-        });
-        Router_1.default.get('/contact', function () {
-            return {
-                payload: { title: "Contact page" }
-            };
-        });
         Router_1.default.get('/settings', ExampleController_1.default.getSettings);
-        Router_1.default.get('/articles', ArticleController_1.default.getArticles);
-        Router_1.default.get('/article/1', ArticleController_1.default.getSingleArticle);
-        Router_1.default.post('/article', ArticleController_1.default.postArticle);
-        Router_1.default.put('/article/:1', ArticleController_1.default.putArticle);
-        Router_1.default.delete('/article/:1', ArticleController_1.default.deleteArticle);
     };
     return Routes;
 }());

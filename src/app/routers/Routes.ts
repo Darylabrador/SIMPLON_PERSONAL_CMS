@@ -11,28 +11,7 @@ class Routes {
             }
         });
 
-        Router.get('/joindre', () => {
-            return {
-                payload: [{ 
-                    title: "Joindre page",
-                    content: "Joindre content"
-                }]
-            }
-        });
-
-        Router.get('/contact', () => {
-            return {
-                payload: { title: "Contact page" }
-            }
-        });
-        
         Router.get('/settings', ExampleController.getSettings);
-
-        Router.get('/articles', ArticleController.getArticles);
-        Router.get('/article/1', ArticleController.getSingleArticle);
-        Router.post('/article', ArticleController.postArticle);
-        Router.put('/article/:1', ArticleController.putArticle);
-        Router.delete('/article/:1', ArticleController.deleteArticle);
     }
 }
 
