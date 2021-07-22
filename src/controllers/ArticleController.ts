@@ -1,11 +1,11 @@
 import Article from "../models/Article";
 
 class ArticleController {
-    public static async getArticles() {
+    public static getArticles() {
         return Article.findAll();
     }
 
-    public static async getSingleArticle() {
+    public static getSingleArticle() {
         return Article.findByPk(1);
     }
 }
