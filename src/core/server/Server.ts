@@ -23,7 +23,6 @@ class Server {
             if (typeof findRoute.callback === "function") {
                 if (findRoute.callback()) {
                     const data = await findRoute.callback();
-                    
                     if(typeof data == "string") {
                         response.handler(data)
                     } else if (data.view) {

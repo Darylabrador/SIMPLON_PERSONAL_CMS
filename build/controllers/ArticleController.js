@@ -11,7 +11,7 @@ var ArticleController = /** @class */ (function () {
         return Article_1.default.findAll();
     };
     ArticleController.getSingleArticle = function () {
-        return Article_1.default.findByPk(1);
+        return Article_1.default.find(1);
     };
     return ArticleController;
 }());

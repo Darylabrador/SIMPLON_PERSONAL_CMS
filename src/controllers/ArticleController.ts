@@ -6,7 +6,7 @@ class ArticleController {
     }
 
     public static getSingleArticle() {
-        return Article.findByPk(1);
+        return Article.find(1);
     }
 }
 
