@@ -1,3 +1,9 @@
+/** 
+ * Routes API
+ * @module routers/Api
+ * @author Daryl ABRADOR
+ */
+
 import Router from '../../core/routing/Router';
 import ArticleController from '../controllers/ArticleController';
 

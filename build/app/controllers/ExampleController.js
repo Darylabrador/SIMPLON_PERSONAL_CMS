@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * Example controller
+ * That's controller return a string html thanks to viewer & response class
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

@@ -1,3 +1,8 @@
+/** 
+ * Article controller
+ * That's controller return only data that will be transform as json thanks to response class
+ */
+
 import Article from "../models/Article";
 
 class ArticleController {

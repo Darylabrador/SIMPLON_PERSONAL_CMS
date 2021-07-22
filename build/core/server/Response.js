@@ -1,4 +1,12 @@
 "use strict";
+/**
+ * Response
+ *
+ * This file is used to handle response from server
+ * It will set the correct header and response depending view params
+ * @module core/server/Response
+ * @author Daryl ABRADOR
+ */
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {

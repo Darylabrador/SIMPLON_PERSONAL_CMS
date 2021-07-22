@@ -1,4 +1,11 @@
 "use strict";
+/**
+ * Model
+ *
+ * This file extends all model classes to enable all database query
+ * @module core/config/Query
+ * @author Daryl ABRADOR
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

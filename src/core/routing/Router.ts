@@ -1,3 +1,11 @@
+/** 
+ * Router (singleton / builder class)
+ * 
+ * This file is used to create route depending methods
+ * @module core/routing/Router
+ * @author Daryl ABRADOR
+ */
+
 import { MethodsEnum } from "../enum/MethodsEnum";
 import Route from "./Route";
 

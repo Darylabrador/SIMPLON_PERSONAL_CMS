@@ -1,3 +1,11 @@
+/** 
+ * Query
+ * 
+ * This file is used to define all database dynamic query and use it in abstract model
+ * @module core/config/Query
+ * @author Daryl ABRADOR
+ */
+
 import Database from "./Database";
 
 class Query {

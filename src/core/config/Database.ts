@@ -1,3 +1,11 @@
+/** 
+ * Database
+ * 
+ * This file is used to create a connection to database and return asynchronous query used by Query class
+ * @module core/config/Database
+ * @author Daryl ABRADOR
+ */
+
 import * as process from "process";
 import mysql from "mysql2";
 import * as dotenv from "dotenv";

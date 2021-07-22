@@ -1,3 +1,12 @@
+/** 
+ * Response
+ * 
+ * This file is used to handle response from server
+ * It will set the correct header and response depending view params
+ * @module core/server/Response
+ * @author Daryl ABRADOR
+ */
+
 import { ServerResponse } from 'http';
 import { ResponseTypeEnum } from '../enum/ResponseTypeEnum';
 

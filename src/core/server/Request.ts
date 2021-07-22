@@ -1,3 +1,12 @@
+/** 
+ * Request
+ * 
+ * This file is used to handle request from server
+ * It will parse all params we will need in the request depending method
+ * @module core/server/Response
+ * @author Daryl ABRADOR
+ */
+
 import url from "url";
 import { IncomingMessage } from 'http';
 import { MethodsEnum } from '../enum/MethodsEnum';

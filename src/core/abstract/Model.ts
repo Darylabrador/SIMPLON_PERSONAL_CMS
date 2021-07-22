@@ -1,3 +1,11 @@
+/** 
+ * Model
+ * 
+ * This file extends all model classes to enable all database query
+ * @module core/config/Query
+ * @author Daryl ABRADOR
+ */
+
 import FieldInterface from "../interfaces/FieldInterface";
 import Query from "../config/Query";
 

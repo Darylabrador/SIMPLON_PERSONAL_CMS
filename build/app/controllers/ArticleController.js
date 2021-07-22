@@ -1,4 +1,8 @@
 "use strict";
+/**
+ * Article controller
+ * That's controller return only data that will be transform as json thanks to response class
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

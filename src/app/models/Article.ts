@@ -1,3 +1,9 @@
+/** 
+ * First article model
+ * @author Daryl ABRADOR
+ */
+
+
 import Model from "../../core/abstract/Model";
 import ModelInterface from "../../core/interfaces/ModelInterface";
 import FieldInterface from "../../core/interfaces/FieldInterface";

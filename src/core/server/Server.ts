@@ -1,3 +1,11 @@
+/** 
+ * Server (singleton class)
+ * 
+ * This file is used to generate the server and handle routes
+ * @module core/server/Server
+ * @author Daryl ABRADOR
+ */
+
 import { createServer } from 'http';
 import Router from '../routing/Router';
 import Viewer from "../templating/Viewer";

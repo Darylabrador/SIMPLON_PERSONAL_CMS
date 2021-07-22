@@ -1,4 +1,11 @@
 "use strict";
+/**
+ * Router (singleton / builder class)
+ *
+ * This file is used to create route depending methods
+ * @module core/routing/Router
+ * @author Daryl ABRADOR
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

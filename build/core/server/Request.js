@@ -1,4 +1,12 @@
 "use strict";
+/**
+ * Request
+ *
+ * This file is used to handle request from server
+ * It will parse all params we will need in the request depending method
+ * @module core/server/Response
+ * @author Daryl ABRADOR
+ */
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };

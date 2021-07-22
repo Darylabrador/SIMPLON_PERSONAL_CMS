@@ -1,3 +1,8 @@
+/** 
+ * Example controller
+ * That's controller return a string html thanks to viewer & response class
+ */
+
 import Viewer from "../../core/templating/Viewer";
 
 class ExampleController {
