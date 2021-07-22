@@ -51,6 +51,7 @@ var Router_1 = __importDefault(require("../routing/Router"));
 var Viewer_1 = __importDefault(require("../templating/Viewer"));
 var Request_1 = __importDefault(require("./Request"));
 var Response_1 = __importDefault(require("./Response"));
+var url_1 = __importDefault(require("url"));
 var Server = /** @class */ (function () {
     function Server() {
         this.port = 3000;
@@ -61,19 +62,29 @@ var Server = /** @class */ (function () {
         }
         return this.instance;
     };
+    Server.prototype.getParams = function (path) {
+        return path === null || path === void 0 ? void 0 : path.slice(1)[path.length - 2];
+    };
+    Server.prototype.getQuery = function (baseURI) {
+        return baseURI.query;
+    };
     Server.prototype.check = function (request, response) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var findRoute, data, viewContent, returningData, viewContent;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var baseURI, path, paramRoute, findRoute, data, viewContent, returningData, params_1, query, findParamRoute, data, viewContent, returningData, viewContent, viewContent;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
+                        baseURI = url_1.default.parse(request.url, true);
+                        path = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
+                        paramRoute = Router_1.default.getAll().filter(function (element) { return element.url.match(':id') && element.method == request.method; });
                         findRoute = Router_1.default.getAll().find(function (element) { return element.method === request.method && element.url == request.url; });
                         if (!findRoute) return [3 /*break*/, 3];
                         if (!(typeof findRoute.callback === "function")) return [3 /*break*/, 2];
                         if (!findRoute.callback()) return [3 /*break*/, 2];
                         return [4 /*yield*/, findRoute.callback()];
                     case 1:
-                        data = _a.sent();
+                        data = _b.sent();
                         if (typeof data == "string") {
                             response.handler(data);
                         }
@@ -89,13 +100,46 @@ var Server = /** @class */ (function () {
                                 returningData = data.payload;
                             response.handler({ entries: returningData });
                         }
-                        _a.label = 2;
-                    case 2: return [3 /*break*/, 4];
+                        _b.label = 2;
+                    case 2: return [3 /*break*/, 9];
                     case 3:
+                        if (!paramRoute) return [3 /*break*/, 8];
+                        params_1 = this.getParams(path);
+                        query = this.getQuery(baseURI);
+                        findParamRoute = paramRoute.find(function (element) { return element.url.replace(':id', params_1) == baseURI.path && element.method == request.method; });
+                        if (!findParamRoute) return [3 /*break*/, 6];
+                        if (!(typeof findParamRoute.callback === "function")) return [3 /*break*/, 5];
+                        if (!findParamRoute.callback()) return [3 /*break*/, 5];
+                        return [4 /*yield*/, findParamRoute.callback(params_1)];
+                    case 4:
+                        data = _b.sent();
+                        if (typeof data == "string") {
+                            response.handler(data);
+                        }
+                        else if (data.view) {
+                            viewContent = Viewer_1.default.render(data.view, data.payload);
+                            response.handler(viewContent);
+                        }
+                        else {
+                            returningData = void 0;
+                            if (!data.payload)
+                                returningData = { data: data };
+                            else
+                                returningData = data.payload;
+                            response.handler({ entries: returningData });
+                        }
+                        _b.label = 5;
+                    case 5: return [3 /*break*/, 7];
+                    case 6:
                         viewContent = Viewer_1.default.render("error", {});
                         response.handler(viewContent);
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
+                        _b.label = 7;
+                    case 7: return [3 /*break*/, 9];
+                    case 8:
+                        viewContent = Viewer_1.default.render("error", {});
+                        response.handler(viewContent);
+                        _b.label = 9;
+                    case 9: return [2 /*return*/];
                 }
             });
         });

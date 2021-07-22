@@ -32,6 +32,7 @@ var Api = /** @class */ (function () {
         Router_1.default.post('/api/article', ArticleController_1.default.postArticle);
         Router_1.default.put('/api/article/:id', ArticleController_1.default.putArticle);
         Router_1.default.delete('/api/article/:id', ArticleController_1.default.deleteArticle);
+        Router_1.default.delete('/api/postes/:id', ArticleController_1.default.deleteArticle);
     };
     return Api;
 }());

@@ -25,7 +25,6 @@ abstract class Model {
         return query.findAll();
     }
 
-
     public find(id: Number) {
         const query = new Query(this.table); 
         return query.find(id);

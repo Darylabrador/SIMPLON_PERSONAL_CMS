@@ -16,7 +16,7 @@ class Api {
                     content: "Joindre content"
                 }]
             }
-        });
+        }); 
 
         Router.get('/api/contact', () => {
             return {
@@ -29,6 +29,7 @@ class Api {
         Router.post('/api/article', ArticleController.postArticle);
         Router.put('/api/article/:id', ArticleController.putArticle);
         Router.delete('/api/article/:id', ArticleController.deleteArticle);
+        Router.delete('/api/postes/:id', ArticleController.deleteArticle);
     }
 }
 

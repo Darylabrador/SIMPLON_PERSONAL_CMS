@@ -14,8 +14,9 @@ var ArticleController = /** @class */ (function () {
     ArticleController.getArticles = function () {
         return Article_1.default.findAll();
     };
-    ArticleController.getSingleArticle = function () {
-        return Article_1.default.find(1);
+    ArticleController.getSingleArticle = function (id) {
+        console.log('in controller ', id);
+        return Article_1.default.find(id);
     };
     ArticleController.postArticle = function () {
         return { message: 'test create article' };

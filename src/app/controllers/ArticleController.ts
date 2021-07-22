@@ -10,8 +10,8 @@ class ArticleController {
         return Article.findAll();
     }
 
-    public static getSingleArticle() {
-        return Article.find(1);
+    public static getSingleArticle(id: Number) {
+        return Article.find(id);
     }
 
     public static postArticle() {

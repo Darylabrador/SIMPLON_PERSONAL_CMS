@@ -7,9 +7,7 @@
  * @author Daryl ABRADOR
  */
 
-import url from "url";
 import { IncomingMessage } from 'http';
-import { MethodsEnum } from '../enum/MethodsEnum';
 
 class Request {
     SERVER_REQUEST: IncomingMessage;
@@ -24,39 +22,18 @@ class Request {
         this.SERVER_REQUEST = request;
         this.url = request.url;
         this.method = request.method;
-
-        let baseURI = url.parse(this.url, true);
-        let path = baseURI.pathname?.split('/')
-
-        switch (this.method) {
-            case MethodsEnum.Get:
-                this.query = this.getQuery(baseURI);
-                this.params = this.getParams(path);
-                break;
-            case MethodsEnum.Post:
-                console.log('retrieve body')
-                break;
-            case MethodsEnum.Put:
-                this.params = this.getParams(path);
-                break;
-            case MethodsEnum.Delete:
-                this.params = this.getParams(path);
-                break;
-            default:
-                break;
-        }
     };
 
-    private getParams(path: any) {
-        return path?.slice(1)[1];
+    setQuery(query: any) {
+        this.query = query;
     }
 
-    private getQuery(baseURI: url.UrlWithParsedQuery) {
-        return baseURI.query;
+    setParams(params: any) {
+        this.params = params;
     }
 
-    private getBody() {
-
+    setBody(body: any) {
+        this.body = body;
     }
 }
 
