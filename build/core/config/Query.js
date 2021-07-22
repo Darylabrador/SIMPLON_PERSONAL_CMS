@@ -39,9 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Database_1 = __importDefault(require("../config/Database"));
+var Database_1 = __importDefault(require("./Database"));
 var Query = /** @class */ (function () {
-    function Query() {
+    function Query(table) {
+        this.table = table;
     }
     Query.prototype.findAll = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -50,13 +51,13 @@ var Query = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT * FROM articles", [])];
+                        return [4 /*yield*/, Database_1.default.query("SELECT * FROM " + this.table, [])];
                     case 1:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
                     case 2:
                         error_1 = _a.sent();
-                        console.log("Error in Abstract Model");
+                        console.log("Error in class query: findAll()");
                         console.log(error_1);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
@@ -71,13 +72,13 @@ var Query = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT * FROM articles where id = ?", [id])];
+                        return [4 /*yield*/, Database_1.default.query("SELECT * FROM " + this.table + " where id = ?", [id])];
                     case 1:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
                     case 2:
                         error_2 = _a.sent();
-                        console.log("Error in Abstract Model");
+                        console.log("Error in class query: find()");
                         console.log(error_2);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];

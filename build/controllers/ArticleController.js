@@ -13,6 +13,15 @@ var ArticleController = /** @class */ (function () {
     ArticleController.getSingleArticle = function () {
         return Article_1.default.find(1);
     };
+    ArticleController.postArticle = function () {
+        return { message: 'test create article' };
+    };
+    ArticleController.putArticle = function () {
+        return { message: 'test update article' };
+    };
+    ArticleController.deleteArticle = function () {
+        return { message: 'test delete article' };
+    };
     return ArticleController;
 }());
 exports.default = ArticleController;

@@ -32,6 +32,9 @@ var Routes = /** @class */ (function () {
         Router_1.default.get('/settings', ExampleController_1.default.getSettings);
         Router_1.default.get('/articles', ArticleController_1.default.getArticles);
         Router_1.default.get('/article/1', ArticleController_1.default.getSingleArticle);
+        Router_1.default.post('/article', ArticleController_1.default.postArticle);
+        Router_1.default.put('/article/:1', ArticleController_1.default.putArticle);
+        Router_1.default.delete('/article/:1', ArticleController_1.default.deleteArticle);
     };
     return Routes;
 }());
