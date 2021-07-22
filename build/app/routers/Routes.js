@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Router_1 = __importDefault(require("../core/routing/Router"));
+var Router_1 = __importDefault(require("../../core/routing/Router"));
 var ExampleController_1 = __importDefault(require("../controllers/ExampleController"));
 var ArticleController_1 = __importDefault(require("../controllers/ArticleController"));
 var Routes = /** @class */ (function () {

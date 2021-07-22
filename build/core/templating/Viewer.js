@@ -38,7 +38,7 @@ var Viewer = /** @class */ (function () {
     }
     Viewer.render = function (filename, entries) {
         var rootFolder = path.resolve('./');
-        var templatePath = path.join(rootFolder, 'build', 'views', filename + ".ejs");
+        var templatePath = path.join(rootFolder, 'build', 'app', 'views', filename + ".ejs");
         var values = __assign({}, entries);
         var template = fs.readFileSync(templatePath, 'utf8');
         return ejs.render(template, values);

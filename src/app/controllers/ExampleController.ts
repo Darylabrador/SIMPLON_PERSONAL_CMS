@@ -1,4 +1,4 @@
-import Viewer from "../core/templating/Viewer";
+import Viewer from "../../core/templating/Viewer";
 
 class ExampleController {
     public static getSettings(): any {

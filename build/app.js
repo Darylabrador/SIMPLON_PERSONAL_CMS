@@ -4,6 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var Server_1 = __importDefault(require("./core/server/Server"));
-var Routes_1 = __importDefault(require("./routers/Routes"));
+var Routes_1 = __importDefault(require("./app/routers/Routes"));
 Routes_1.default.build();
 Server_1.default.start();

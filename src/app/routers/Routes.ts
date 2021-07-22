@@ -1,4 +1,4 @@
-import Router from '../core/routing/Router';
+import Router from '../../core/routing/Router';
 import ExampleController from '../controllers/ExampleController';
 import ArticleController from '../controllers/ArticleController';
 

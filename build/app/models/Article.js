@@ -18,8 +18,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Model_1 = __importDefault(require("../core/abstract/Model"));
-var FieldTypes_1 = require("../core/enum/FieldTypes");
+var Model_1 = __importDefault(require("../../core/abstract/Model"));
+var FieldTypes_1 = require("../../core/enum/FieldTypes");
 var Article = /** @class */ (function (_super) {
     __extends(Article, _super);
     function Article() {
