@@ -80,9 +80,7 @@ var ArticleController = /** @class */ (function () {
                         return [4 /*yield*/, Article_1.default.find(id)];
                     case 1:
                         articles = _a.sent();
-                        return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })
-                            // return Article.find(id);
-                        ];
+                        return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })];
                     case 2:
                         error_2 = _a.sent();
                         console.log('error in signle article ', error_2);
@@ -93,11 +91,11 @@ var ArticleController = /** @class */ (function () {
         });
     };
     ArticleController.postArticle = function (request) {
-        console.log('post in article ', request);
+        console.log('post in article ', request.data);
         return { test: "test post" };
     };
     ArticleController.putArticle = function (request) {
-        console.log('put in article ', request);
+        console.log('put in article ', request.data);
         return { message: 'test update article' };
     };
     ArticleController.deleteArticle = function (request) {

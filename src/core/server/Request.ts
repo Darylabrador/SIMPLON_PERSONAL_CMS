@@ -20,39 +20,50 @@ class Request {
         this.SERVER_REQUEST = request;
         this.url = request.url;
         this.method = request.method;
-        this.setData(request)
+        this.setData()
     };
 
-    private setData(request: any) {
-        let baseURI = url.parse(request.url, true);
+    public async setData() {
+        let baseURI = url.parse(this.url, true);
         let path = baseURI.pathname?.split('/');
         let params = path?.slice(1)[path.length - 2];
         let query = baseURI.query;
+        let body: any;
 
-        let body: Array<any> = [];
-
-        switch (request.method) {
+        switch (this.method) {
             case MethodsEnum.Get:
                 this.data = { params, query }
+                break;
             case MethodsEnum.Post:
-                this.SERVER_REQUEST.on('data', (chunk: any) => {
-                    body.push(chunk)
-                }).on('end', () => {
-                    const parsedBody = Buffer.concat(body).toString();
-                    this.data = { body: parsedBody}
-                });
+                body = await this.parseBody();
+                this.data = { body }
+                console.log('POST : data of this.data in request class : ', this.data)
+                break;
             case MethodsEnum.Put:
-                this.SERVER_REQUEST.on('data', (chunk: any) => {
-                    body.push(chunk)
-                }).on('end', () => {
-                    const parsedBody = Buffer.concat(body).toString();
-                    this.data = {params, body: parsedBody}
-                });
+                body = await this.parseBody();
+                this.data = { params, body }
+                console.log('PUT : data of this.data in request class : ', this.data)
+                break;
             case MethodsEnum.Delete:
                 this.data = { params }
+                break;
             default:
                 break;
         }
+    }
+
+    public parseBody() {
+        let body: Array<any> = [];
+        return new Promise((resolve, reject) => {
+            this.SERVER_REQUEST.on('data', (chunk: any) => {
+                body.push(chunk)
+            }).on('end', () => {
+                let headerType = this.SERVER_REQUEST.headers['content-type'];
+                const parsedBody = Buffer.concat(body).toString();
+                if(headerType == "application/json") return resolve(JSON.parse(parsedBody))
+                else return resolve(parsedBody)
+            });
+        })
     }
 }
 

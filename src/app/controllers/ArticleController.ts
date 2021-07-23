@@ -23,19 +23,18 @@ class ArticleController {
             const id         = data.params; 
             const articles   = await Article.find(id)
             return Viewer.render('templateObject', { articles })
-            // return Article.find(id);
         } catch (error) {
             console.log('error in signle article ', error)
         }
     }
 
     public static postArticle(request: Request) {
-        console.log('post in article ', request)
+        console.log('post in article ', request.data)
         return {test: "test post"};
     }
 
     public static putArticle(request: Request) {
-        console.log('put in article ', request)
+        console.log('put in article ', request.data)
         return {message: 'test update article'}
     }
 

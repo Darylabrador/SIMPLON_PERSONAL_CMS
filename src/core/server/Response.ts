@@ -31,7 +31,6 @@ class Response {
     }
 
     public handler(content: any) {
-        console.log('response', content)
         this.saveContent = content;
         this.setHeader();
         this.setReponse();

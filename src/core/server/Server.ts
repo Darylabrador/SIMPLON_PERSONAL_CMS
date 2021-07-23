@@ -30,7 +30,7 @@ class Server {
         return path?.slice(1)[path.length - 2];
     }
 
-    private async check(request: any, response: any) {
+    private async check(request: Request, response: any) {
         let baseURI = url.parse(request.url, true);
         let path = baseURI.pathname?.split('/');
         let params = this.getParams(path);
@@ -51,7 +51,6 @@ class Server {
                         const viewContent = Viewer.render(data.view, data.payload);
                         response.handler(viewContent)
                     } else {
-                        console.log('render from server 3', data)
                         let returningData;
                         if (!data.payload) returningData = { data }
                         else returningData = data.payload

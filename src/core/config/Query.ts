@@ -14,6 +14,18 @@ class Query {
     fields: Array<FieldInterface> = [];
     searchFields: string = "";
 
+    // TODO : implements 
+
+    // selectField(), 
+    // excludeField(), 
+    // where()
+    // AndWhere()
+
+    // example : where(xx) {
+    // ...
+    // return this
+    // })
+
     constructor(table: string, fields: Array<FieldInterface>) {
         this.table   = table;
         this.fields  = fields;

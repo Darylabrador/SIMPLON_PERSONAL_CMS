@@ -93,7 +93,6 @@ var Server = /** @class */ (function () {
                                 response.handler(viewContent);
                             }
                             else {
-                                console.log('render from server 3', data);
                                 returningData = void 0;
                                 if (!data.payload)
                                     returningData = { data: data };
