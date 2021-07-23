@@ -29,16 +29,17 @@ class ArticleController {
     }
 
     public static postArticle(request: Request) {
-        console.log('post in article ', request.data)
+        console.log('post article in controller ', request.data)
         return {test: "test post"};
     }
 
     public static putArticle(request: Request) {
-        console.log('put in article ', request.data)
+        console.log('put article in controller ', request.data)
         return {message: 'test update article'}
     }
 
     public static deleteArticle(request: Request) {
+        console.log('delete article in controller ', request.data)
         return {message: 'test delete article'}
     }
 }

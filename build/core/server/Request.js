@@ -83,13 +83,11 @@ var Request = /** @class */ (function () {
                     case 3:
                         body = _c.sent();
                         this.data = { body: body };
-                        console.log('POST : data of this.data in request class : ', this.data);
                         return [3 /*break*/, 8];
                     case 4: return [4 /*yield*/, this.parseBody()];
                     case 5:
                         body = _c.sent();
                         this.data = { params: params, body: body };
-                        console.log('PUT : data of this.data in request class : ', this.data);
                         return [3 /*break*/, 8];
                     case 6:
                         this.data = { params: params };

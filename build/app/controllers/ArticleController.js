@@ -91,14 +91,15 @@ var ArticleController = /** @class */ (function () {
         });
     };
     ArticleController.postArticle = function (request) {
-        console.log('post in article ', request.data);
+        console.log('post article in controller ', request.data);
         return { test: "test post" };
     };
     ArticleController.putArticle = function (request) {
-        console.log('put in article ', request.data);
+        console.log('put article in controller ', request.data);
         return { message: 'test update article' };
     };
     ArticleController.deleteArticle = function (request) {
+        console.log('delete article in controller ', request.data);
         return { message: 'test delete article' };
     };
     return ArticleController;

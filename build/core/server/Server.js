@@ -114,11 +114,21 @@ var Server = /** @class */ (function () {
     };
     Server.prototype.startServer = function () {
         var _this = this;
-        var server = http_1.createServer(function (request, response) {
-            var requestHandler = new Request_1.default(request);
-            var responseHandler = new Response_1.default(response);
-            _this.check(requestHandler, responseHandler);
-        });
+        var server = http_1.createServer(function (request, response) { return __awaiter(_this, void 0, void 0, function () {
+            var requestHandler, responseHandler;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        requestHandler = new Request_1.default(request);
+                        responseHandler = new Response_1.default(response);
+                        return [4 /*yield*/, requestHandler.setData()];
+                    case 1:
+                        _a.sent();
+                        this.check(requestHandler, responseHandler);
+                        return [2 /*return*/];
+                }
+            });
+        }); });
         server.listen(this.port);
     };
     Server.start = function () {

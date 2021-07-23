@@ -37,12 +37,10 @@ class Request {
             case MethodsEnum.Post:
                 body = await this.parseBody();
                 this.data = { body }
-                console.log('POST : data of this.data in request class : ', this.data)
                 break;
             case MethodsEnum.Put:
                 body = await this.parseBody();
                 this.data = { params, body }
-                console.log('PUT : data of this.data in request class : ', this.data)
                 break;
             case MethodsEnum.Delete:
                 this.data = { params }
@@ -52,7 +50,7 @@ class Request {
         }
     }
 
-    public parseBody() {
+    private parseBody() {
         let body: Array<any> = [];
         return new Promise((resolve, reject) => {
             this.SERVER_REQUEST.on('data', (chunk: any) => {

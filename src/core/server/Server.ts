@@ -57,7 +57,6 @@ class Server {
                         response.handler({ entries: returningData });
                     }
                 }
-
             }
         } else {
             const viewContent = Viewer.render("error", {});
@@ -66,9 +65,10 @@ class Server {
     }
 
     private startServer() {
-        let server = createServer((request: any, response: any) => {
+        let server = createServer(async (request: any, response: any) => {
             const requestHandler = new Request(request);
             const responseHandler = new Response(response);
+            await requestHandler.setData();
             this.check(requestHandler, responseHandler);
         })
         server.listen(this.port);
