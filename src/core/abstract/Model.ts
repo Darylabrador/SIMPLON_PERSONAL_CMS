@@ -12,12 +12,10 @@ import Query from "../config/Query";
 abstract class Model {
     table: string;
     fields: Array<FieldInterface> = [];
-    query: any;
 
     constructor(table: string, fields: Array<FieldInterface>) {
         this.table   = table;
         this.fields  = fields;
-        this.query   = new Query(table, fields)
     }
 
     public findAll() {

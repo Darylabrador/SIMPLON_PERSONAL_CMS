@@ -11,7 +11,6 @@ import Router from '../routing/Router';
 import Viewer from "../templating/Viewer";
 import Request from './Request';
 import Response from './Response';
-import { MethodsEnum } from '../enum/MethodsEnum';
 import url from "url";
 
 class Server {
@@ -31,41 +30,35 @@ class Server {
         return path?.slice(1)[path.length - 2];
     }
 
-    private getQuery(baseURI: url.UrlWithParsedQuery) {
-        return baseURI.query;
-    }
-
     private async check(request: any, response: any) {
         let baseURI = url.parse(request.url, true);
-        let path    = baseURI.pathname?.split('/');
-        let params  = this.getParams(path);
-        let query   = this.getQuery(baseURI);
+        let path = baseURI.pathname?.split('/');
+        let params = this.getParams(path);
 
         let findRoute = Router.getAll().find(element =>
             (element.url.match(baseURI.path) && element.method == request.method) ||
             (element.url.match(element.regexp, params) && element.url.replace(element.regexp, params) == baseURI.path && element.method == request.method)
         );
 
-        console.log(findRoute);
-
         if (findRoute) {
             if (typeof findRoute.callback === "function") {
-                if (findRoute.callback()) {
-                    await request.setParams(params);
-                    await request.setQuery(query);
-                    const data = await findRoute.callback(params, query);
+                const data = await findRoute.callback(request);
+                
+                if(data) {
                     if (typeof data == "string") {
                         response.handler(data)
                     } else if (data.view) {
                         const viewContent = Viewer.render(data.view, data.payload);
                         response.handler(viewContent)
                     } else {
+                        console.log('render from server 3', data)
                         let returningData;
                         if (!data.payload) returningData = { data }
                         else returningData = data.payload
                         response.handler({ entries: returningData });
                     }
                 }
+
             }
         } else {
             const viewContent = Viewer.render("error", {});

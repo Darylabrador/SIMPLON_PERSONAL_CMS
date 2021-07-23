@@ -6,6 +6,7 @@
 
 import Router from '../../core/routing/Router';
 import ExampleController from '../controllers/ExampleController';
+import ArticleController from '../controllers/ArticleController';
 
 
 class Routes {
@@ -18,6 +19,8 @@ class Routes {
         });
 
         Router.get('/settings', ExampleController.getSettings);
+        Router.get('/articles', ArticleController.getArticles)
+        Router.get('/article/:id', ArticleController.getSingleArticle);
     }
 }
 

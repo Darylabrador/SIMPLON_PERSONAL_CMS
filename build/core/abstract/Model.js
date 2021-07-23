@@ -16,7 +16,6 @@ var Model = /** @class */ (function () {
         this.fields = [];
         this.table = table;
         this.fields = fields;
-        this.query = new Query_1.default(table, fields);
     }
     Model.prototype.findAll = function () {
         var query = new Query_1.default(this.table, this.fields);

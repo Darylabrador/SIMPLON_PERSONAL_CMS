@@ -7,33 +7,52 @@
  * @author Daryl ABRADOR
  */
 
-import { IncomingMessage } from 'http';
+import { MethodsEnum } from '../enum/MethodsEnum';
+import url from "url";
 
 class Request {
-    SERVER_REQUEST: IncomingMessage;
+    SERVER_REQUEST: any;
     url: any;
     method: any;
-    query: any;
-    params: any;
-    body: any;
+    data: any;
 
-
-    public constructor(request: IncomingMessage) {
+    public constructor(request: any) {
         this.SERVER_REQUEST = request;
         this.url = request.url;
         this.method = request.method;
+        this.setData(request)
     };
 
-    setQuery(query: any) {
-        this.query = query;
-    }
+    private setData(request: any) {
+        let baseURI = url.parse(request.url, true);
+        let path = baseURI.pathname?.split('/');
+        let params = path?.slice(1)[path.length - 2];
+        let query = baseURI.query;
 
-    setParams(params: any) {
-        this.params = params;
-    }
+        let body: Array<any> = [];
 
-    setBody(body: any) {
-        this.body = body;
+        switch (request.method) {
+            case MethodsEnum.Get:
+                this.data = { params, query }
+            case MethodsEnum.Post:
+                this.SERVER_REQUEST.on('data', (chunk: any) => {
+                    body.push(chunk)
+                }).on('end', () => {
+                    const parsedBody = Buffer.concat(body).toString();
+                    this.data = { body: parsedBody}
+                });
+            case MethodsEnum.Put:
+                this.SERVER_REQUEST.on('data', (chunk: any) => {
+                    body.push(chunk)
+                }).on('end', () => {
+                    const parsedBody = Buffer.concat(body).toString();
+                    this.data = {params, body: parsedBody}
+                });
+            case MethodsEnum.Delete:
+                this.data = { params }
+            default:
+                break;
+        }
     }
 }
 

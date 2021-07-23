@@ -40,6 +40,7 @@ var Response = /** @class */ (function () {
         return this.SERVER_RESPONSE.end(responseContent);
     };
     Response.prototype.handler = function (content) {
+        console.log('response', content);
         this.saveContent = content;
         this.setHeader();
         this.setReponse();

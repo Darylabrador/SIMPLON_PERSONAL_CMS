@@ -25,8 +25,6 @@ class Api {
         });
 
         
-        Router.get('/api/articles', ArticleController.getArticles)
-        Router.get('/api/article/:id', ArticleController.getSingleArticle);
         Router.post('/api/article', ArticleController.postArticle);
         Router.put('/api/article/:id', ArticleController.putArticle);
         Router.delete('/api/article/:id', ArticleController.deleteArticle);
