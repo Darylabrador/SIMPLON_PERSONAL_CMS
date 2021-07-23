@@ -28,7 +28,7 @@ var Api = /** @class */ (function () {
             };
         });
         Router_1.default.get('/api/articles', ArticleController_1.default.getArticles);
-        Router_1.default.get('/api/article/:id', ArticleController_1.default.getSingleArticle);
+        Router_1.default.get('/api/article/:test', ArticleController_1.default.getSingleArticle);
         Router_1.default.post('/api/article', ArticleController_1.default.postArticle);
         Router_1.default.put('/api/article/:id', ArticleController_1.default.putArticle);
         Router_1.default.delete('/api/article/:id', ArticleController_1.default.deleteArticle);

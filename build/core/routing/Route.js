@@ -12,7 +12,7 @@ var Route = /** @class */ (function () {
         this.method = method;
         this.url = url;
         this.callback = callback;
-        this.regexp = regexp;
+        this.regexp = ":" + url.split(':')[1];
     }
     return Route;
 }());

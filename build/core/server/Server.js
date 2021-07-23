@@ -81,8 +81,9 @@ var Server = /** @class */ (function () {
                         query = this.getQuery(baseURI);
                         findRoute = Router_1.default.getAll().find(function (element) {
                             return (element.url.match(baseURI.path) && element.method == request.method) ||
-                                (element.url.match('[^\:]*', params) && element.url.replace(':id', params) == baseURI.path && element.method == request.method);
+                                (element.url.match(element.regexp, params) && element.url.replace(element.regexp, params) == baseURI.path && element.method == request.method);
                         });
+                        console.log(findRoute);
                         if (!findRoute) return [3 /*break*/, 5];
                         if (!(typeof findRoute.callback === "function")) return [3 /*break*/, 4];
                         if (!findRoute.callback()) return [3 /*break*/, 4];
