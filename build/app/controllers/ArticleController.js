@@ -161,12 +161,32 @@ var ArticleController = /** @class */ (function () {
         return { test: "test post html" };
     };
     ArticleController.putArticle = function (request) {
-        console.log('put article in controller ', request.data);
-        return { message: 'test update article' };
+        return __awaiter(this, void 0, void 0, function () {
+            var data, id, _a, title, content, article, error_6;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        data = request.data;
+                        id = data.params;
+                        _a = data.body, title = _a.title, content = _a.content;
+                        return [4 /*yield*/, Article_1.default.update(id, { title: title, content: content })];
+                    case 1:
+                        article = _b.sent();
+                        console.log('put article in controller ', id, title, content, article);
+                        return [2 /*return*/, { message: 'test update article' }];
+                    case 2:
+                        error_6 = _b.sent();
+                        console.log('Error in put article (api)', error_6);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     ArticleController.deleteArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, error_6;
+            var data, id, error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -178,8 +198,8 @@ var ArticleController = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, { message: 'article was deleted' }];
                     case 2:
-                        error_6 = _a.sent();
-                        console.log('error in delete article (api)', error_6);
+                        error_7 = _a.sent();
+                        console.log('error in delete article (api)', error_7);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

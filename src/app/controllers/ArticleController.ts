@@ -68,9 +68,17 @@ class ArticleController {
         return {test: "test post html"};
     }
 
-    public static putArticle(request: Request) {
-        console.log('put article in controller ', request.data)
-        return {message: 'test update article'}
+    public static async putArticle(request: Request) {
+        try {
+            const  { data }         = request;
+            const id                = data.params; 
+            const {title, content}  = data.body;
+            await Article.update(id, {title, content});
+            return {message: 'article cas updated'}
+        } catch (error) {
+            console.log('Error in put article (api)', error)
+        }
+
     }
 
     public static async deleteArticle(request: Request) {

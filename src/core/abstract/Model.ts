@@ -37,6 +37,11 @@ abstract class Model {
         const query = new Query(this.table, this.fields); 
         return query.delete(id);
     }
+
+    public update(id: Number, values: Object) {
+        const query = new Query(this.table, this.fields); 
+        return query.update(id, values);
+    }
 }
 
 export default Model;

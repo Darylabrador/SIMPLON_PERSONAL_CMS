@@ -52,7 +52,7 @@ class Query {
 
     async find(id: Number) {
         try {
-            const requestData: any = await Database.query(`SELECT ${this.searchFields} FROM ${this.table} where id = ?`, [id])
+            const requestData: any = await Database.query(`SELECT ${this.searchFields} FROM ${this.table} where id = ?;`, [id])
             return requestData;
         } catch (error) {
             console.log("Error in class query: find()")
@@ -64,12 +64,21 @@ class Query {
         let valuesArray   = Object.values(values)
         let questionMarks = this.insertFields.split(",").splice(0, this.fields.length-1).join();
         let createFiels   = this.searchFields.split(",").splice(1, this.fields.length).join();
-        const requestData: any = await Database.query(`INSERT INTO ${this.table} (${createFiels}) VALUES (${questionMarks})`, valuesArray);
+        const requestData: any = await Database.query(`INSERT INTO ${this.table} (${createFiels}) VALUES (${questionMarks});`, valuesArray);
+        return requestData;
+    }
+    
+    async update(id: Number, values: Object) {
+        let valuesArray     = Object.values(values)
+        let updatedFields   = this.searchFields.split(",").splice(1, this.fields.length).join();
+        let setUpdateFields = updatedFields.split(',').map(element => `${element} = ?`).join();
+        valuesArray.push(Number(id))
+        const requestData: any = await Database.query(`UPDATE ${this.table} SET ${setUpdateFields} WHERE id = ?;`, valuesArray);
         return requestData;
     }
 
     async delete(id: Number) {
-        const requestData: any = await Database.query(`DELETE FROM ${this.table} WHERE id = ?`, [id]);
+        const requestData: any = await Database.query(`DELETE FROM ${this.table} WHERE id = ?;`, [id]);
         return requestData;
     }
 }

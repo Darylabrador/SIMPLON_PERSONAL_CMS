@@ -33,6 +33,10 @@ var Model = /** @class */ (function () {
         var query = new Query_1.default(this.table, this.fields);
         return query.delete(id);
     };
+    Model.prototype.update = function (id, values) {
+        var query = new Query_1.default(this.table, this.fields);
+        return query.update(id, values);
+    };
     return Model;
 }());
 exports.default = Model;

@@ -98,7 +98,7 @@ var Query = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT " + this.searchFields + " FROM " + this.table + " where id = ?", [id])];
+                        return [4 /*yield*/, Database_1.default.query("SELECT " + this.searchFields + " FROM " + this.table + " where id = ?;", [id])];
                     case 1:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
@@ -121,7 +121,25 @@ var Query = /** @class */ (function () {
                         valuesArray = Object.values(values);
                         questionMarks = this.insertFields.split(",").splice(0, this.fields.length - 1).join();
                         createFiels = this.searchFields.split(",").splice(1, this.fields.length).join();
-                        return [4 /*yield*/, Database_1.default.query("INSERT INTO " + this.table + " (" + createFiels + ") VALUES (" + questionMarks + ")", valuesArray)];
+                        return [4 /*yield*/, Database_1.default.query("INSERT INTO " + this.table + " (" + createFiels + ") VALUES (" + questionMarks + ");", valuesArray)];
+                    case 1:
+                        requestData = _a.sent();
+                        return [2 /*return*/, requestData];
+                }
+            });
+        });
+    };
+    Query.prototype.update = function (id, values) {
+        return __awaiter(this, void 0, void 0, function () {
+            var valuesArray, updatedFields, setUpdateFields, requestData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        valuesArray = Object.values(values);
+                        updatedFields = this.searchFields.split(",").splice(1, this.fields.length).join();
+                        setUpdateFields = updatedFields.split(',').map(function (element) { return element + " = ?"; }).join();
+                        valuesArray.push(Number(id));
+                        return [4 /*yield*/, Database_1.default.query("UPDATE " + this.table + " SET " + setUpdateFields + " WHERE id = ?;", valuesArray)];
                     case 1:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
@@ -134,7 +152,7 @@ var Query = /** @class */ (function () {
             var requestData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, Database_1.default.query("DELETE FROM " + this.table + " WHERE id = ?", [id])];
+                    case 0: return [4 /*yield*/, Database_1.default.query("DELETE FROM " + this.table + " WHERE id = ?;", [id])];
                     case 1:
                         requestData = _a.sent();
                         return [2 /*return*/, requestData];
