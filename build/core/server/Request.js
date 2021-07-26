@@ -98,6 +98,19 @@ var Request = /** @class */ (function () {
             });
         });
     };
+    Request.prototype.parseUrlEncoded = function (parsedBody) {
+        var dataSplited = parsedBody.split('&');
+        var dataArray = [];
+        dataSplited.forEach(function (data) {
+            var tab = data.split('=');
+            var dataObject = new Object();
+            var key = tab[0];
+            var value = tab[1];
+            dataObject[key] = value;
+            dataArray.push(dataObject);
+        });
+        return dataArray;
+    };
     Request.prototype.parseBody = function () {
         var _this = this;
         var body = [];
@@ -109,6 +122,8 @@ var Request = /** @class */ (function () {
                 var parsedBody = Buffer.concat(body).toString();
                 if (headerType == "application/json")
                     return resolve(JSON.parse(parsedBody));
+                if (headerType == "application/x-www-form-urlencoded")
+                    return resolve(_this.parseUrlEncoded(parsedBody));
                 else
                     return resolve(parsedBody);
             });

@@ -17,6 +17,10 @@ class ArticleController {
         }
     }
 
+    public static getCreateArticle() {
+        return Viewer.render('createArticle', { title: 'Create article' })
+    }
+
     public static async getSingleArticle(request: Request) {
         try {
             const  { data }  = request;
@@ -31,6 +35,11 @@ class ArticleController {
     public static postArticle(request: Request) {
         console.log('post article in controller ', request.data)
         return {test: "test post"};
+    }
+
+    public static postArticleHtml(request: Request) {
+        console.log('post article in controller ', request.data)
+        return {test: "test post html"};
     }
 
     public static putArticle(request: Request) {

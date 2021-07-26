@@ -23,7 +23,9 @@ var Routes = /** @class */ (function () {
         });
         Router_1.default.get('/settings', ExampleController_1.default.getSettings);
         Router_1.default.get('/articles', ArticleController_1.default.getArticles);
+        Router_1.default.get('/article/create', ArticleController_1.default.getCreateArticle);
         Router_1.default.get('/article/:id', ArticleController_1.default.getSingleArticle);
+        Router_1.default.post('/article', ArticleController_1.default.postArticleHtml);
     };
     return Routes;
 }());

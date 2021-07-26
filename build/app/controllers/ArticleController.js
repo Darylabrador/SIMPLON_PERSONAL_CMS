@@ -68,6 +68,9 @@ var ArticleController = /** @class */ (function () {
             });
         });
     };
+    ArticleController.getCreateArticle = function () {
+        return Viewer_1.default.render('createArticle', { title: 'Create article' });
+    };
     ArticleController.getSingleArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
             var data, id, articles, error_2;
@@ -93,6 +96,10 @@ var ArticleController = /** @class */ (function () {
     ArticleController.postArticle = function (request) {
         console.log('post article in controller ', request.data);
         return { test: "test post" };
+    };
+    ArticleController.postArticleHtml = function (request) {
+        console.log('post article in controller ', request.data);
+        return { test: "test post html" };
     };
     ArticleController.putArticle = function (request) {
         console.log('put article in controller ', request.data);

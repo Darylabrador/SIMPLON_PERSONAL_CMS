@@ -50,6 +50,20 @@ class Request {
         }
     }
 
+    private parseUrlEncoded(parsedBody: any) {
+        let dataSplited = parsedBody.split('&')
+        let dataArray: any   = [];
+        dataSplited.forEach((data: any) => {
+            let tab   = data.split('=');
+            let dataObject: any = new Object();
+            let key   = tab[0];
+            let value = tab[1];
+            dataObject[key]   = value
+            dataArray.push(dataObject)
+        })
+        return dataArray;
+    }
+
     private parseBody() {
         let body: Array<any> = [];
         return new Promise((resolve, reject) => {
@@ -59,6 +73,7 @@ class Request {
                 let headerType = this.SERVER_REQUEST.headers['content-type'];
                 const parsedBody = Buffer.concat(body).toString();
                 if(headerType == "application/json") return resolve(JSON.parse(parsedBody))
+                if(headerType == "application/x-www-form-urlencoded") return resolve(this.parseUrlEncoded(parsedBody))
                 else return resolve(parsedBody)
             });
         })

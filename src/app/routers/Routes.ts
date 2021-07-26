@@ -20,7 +20,10 @@ class Routes {
 
         Router.get('/settings', ExampleController.getSettings);
         Router.get('/articles', ArticleController.getArticles)
+        Router.get('/article/create', ArticleController.getCreateArticle)
         Router.get('/article/:id', ArticleController.getSingleArticle);
+        Router.post('/article', ArticleController.postArticleHtml)
+
     }
 }
 
