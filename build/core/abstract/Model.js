@@ -25,6 +25,14 @@ var Model = /** @class */ (function () {
         var query = new Query_1.default(this.table, this.fields);
         return query.find(id);
     };
+    Model.prototype.create = function (values) {
+        var query = new Query_1.default(this.table, this.fields);
+        return query.create(values);
+    };
+    Model.prototype.delete = function (id) {
+        var query = new Query_1.default(this.table, this.fields);
+        return query.delete(id);
+    };
     return Model;
 }());
 exports.default = Model;

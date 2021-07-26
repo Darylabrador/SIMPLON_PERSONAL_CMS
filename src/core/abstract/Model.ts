@@ -27,6 +27,16 @@ abstract class Model {
         const query = new Query(this.table, this.fields); 
         return query.find(id);
     }
+
+    public create(values: object) {
+        const query = new Query(this.table, this.fields); 
+        return query.create(values);
+    }
+
+    public delete(id: Number) {
+        const query = new Query(this.table, this.fields); 
+        return query.delete(id);
+    }
 }
 
 export default Model;

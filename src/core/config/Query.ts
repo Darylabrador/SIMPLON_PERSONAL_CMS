@@ -13,6 +13,7 @@ class Query {
     table: string;
     fields: Array<FieldInterface> = [];
     searchFields: string = "";
+    insertFields: string = "";
 
     // TODO : implements 
 
@@ -31,9 +32,11 @@ class Query {
         this.fields  = fields;
 
         this.searchFields += fields[0].field;
+        this.insertFields += "?";
 
         for(let i = 1; i < fields.length; i++) {
-            this.searchFields += `, ${fields[i].field}`
+            this.searchFields += `, ${fields[i].field}`;
+            this.insertFields += `, ?`;
         }
     }
 
@@ -55,6 +58,19 @@ class Query {
             console.log("Error in class query: find()")
             console.log(error);
         }
+    }
+
+    async create(values: object) {
+        let valuesArray   = Object.values(values)
+        let questionMarks = this.insertFields.split(",").splice(0, this.fields.length-1).join();
+        let createFiels   = this.searchFields.split(",").splice(1, this.fields.length).join();
+        const requestData: any = await Database.query(`INSERT INTO ${this.table} (${createFiels}) VALUES (${questionMarks})`, valuesArray);
+        return requestData;
+    }
+
+    async delete(id: Number) {
+        const requestData: any = await Database.query(`DELETE FROM ${this.table} WHERE id = ?`, [id]);
+        return requestData;
     }
 }
 

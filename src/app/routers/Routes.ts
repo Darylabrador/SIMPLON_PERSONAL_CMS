@@ -21,7 +21,6 @@ class Routes {
         Router.get('/article/create', ArticleController.getCreateArticle)
         Router.get('/article/:id', ArticleController.getSingleArticle);
         Router.post('/article', ArticleController.postArticleHtml)
-
     }
 }
 

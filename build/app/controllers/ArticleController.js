@@ -61,7 +61,7 @@ var ArticleController = /** @class */ (function () {
                         return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })];
                     case 2:
                         error_1 = _a.sent();
-                        console.log('error in articles', error_1);
+                        console.log('error in articles (html)', error_1);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -83,7 +83,7 @@ var ArticleController = /** @class */ (function () {
                         return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })];
                     case 2:
                         error_2 = _a.sent();
-                        console.log('error in signle article ', error_2);
+                        console.log('error in single article (html)', error_2);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -103,7 +103,7 @@ var ArticleController = /** @class */ (function () {
                         return [2 /*return*/, articles];
                     case 2:
                         error_3 = _a.sent();
-                        console.log('error in articles', error_3);
+                        console.log('error in articles (api)', error_3);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -125,7 +125,7 @@ var ArticleController = /** @class */ (function () {
                         return [2 /*return*/, articles];
                     case 2:
                         error_4 = _a.sent();
-                        console.log('error in signle article ', error_4);
+                        console.log('error in single article (api)', error_4);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -136,8 +136,25 @@ var ArticleController = /** @class */ (function () {
         return Viewer_1.default.render('createArticle', { title: 'Create article' });
     };
     ArticleController.postArticle = function (request) {
-        console.log('post article in controller ', request.data);
-        return { test: "test post" };
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, title, content, createdArticle, error_5;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 2, , 3]);
+                        _a = request.data.body, title = _a.title, content = _a.content;
+                        return [4 /*yield*/, Article_1.default.create({ title: title, content: content })];
+                    case 1:
+                        createdArticle = _b.sent();
+                        return [2 /*return*/, { id: createdArticle.insertId, title: title, content: content }];
+                    case 2:
+                        error_5 = _b.sent();
+                        console.log('error in post article (api)', error_5);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     ArticleController.postArticleHtml = function (request) {
         console.log('post article in controller ', request.data);
@@ -148,8 +165,26 @@ var ArticleController = /** @class */ (function () {
         return { message: 'test update article' };
     };
     ArticleController.deleteArticle = function (request) {
-        console.log('delete article in controller ', request.data);
-        return { message: 'test delete article' };
+        return __awaiter(this, void 0, void 0, function () {
+            var data, id, error_6;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        data = request.data;
+                        id = data.params;
+                        return [4 /*yield*/, Article_1.default.delete(id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, { message: 'article was deleted' }];
+                    case 2:
+                        error_6 = _a.sent();
+                        console.log('error in delete article (api)', error_6);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
     };
     return ArticleController;
 }());

@@ -60,11 +60,14 @@ var Query = /** @class */ (function () {
     function Query(table, fields) {
         this.fields = [];
         this.searchFields = "";
+        this.insertFields = "";
         this.table = table;
         this.fields = fields;
         this.searchFields += fields[0].field;
+        this.insertFields += "?";
         for (var i = 1; i < fields.length; i++) {
             this.searchFields += ", " + fields[i].field;
+            this.insertFields += ", ?";
         }
     }
     Query.prototype.findAll = function () {
@@ -105,6 +108,36 @@ var Query = /** @class */ (function () {
                         console.log(error_2);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Query.prototype.create = function (values) {
+        return __awaiter(this, void 0, void 0, function () {
+            var valuesArray, questionMarks, createFiels, requestData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        valuesArray = Object.values(values);
+                        questionMarks = this.insertFields.split(",").splice(0, this.fields.length - 1).join();
+                        createFiels = this.searchFields.split(",").splice(1, this.fields.length).join();
+                        return [4 /*yield*/, Database_1.default.query("INSERT INTO " + this.table + " (" + createFiels + ") VALUES (" + questionMarks + ")", valuesArray)];
+                    case 1:
+                        requestData = _a.sent();
+                        return [2 /*return*/, requestData];
+                }
+            });
+        });
+    };
+    Query.prototype.delete = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var requestData;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, Database_1.default.query("DELETE FROM " + this.table + " WHERE id = ?", [id])];
+                    case 1:
+                        requestData = _a.sent();
+                        return [2 /*return*/, requestData];
                 }
             });
         });

@@ -13,7 +13,7 @@ class ArticleController {
             const articles = await Article.findAll();
             return Viewer.render('templateObject', { articles })
         } catch (error) {
-            console.log('error in articles', error)
+            console.log('error in articles (html)', error)
         }
     }
 
@@ -24,7 +24,7 @@ class ArticleController {
             const articles   = await Article.find(id)
             return Viewer.render('templateObject', { articles })
         } catch (error) {
-            console.log('error in signle article ', error)
+            console.log('error in single article (html)', error)
         }
     }
 
@@ -33,7 +33,7 @@ class ArticleController {
             const articles = await Article.findAll();
             return articles;
         } catch (error) {
-            console.log('error in articles', error)
+            console.log('error in articles (api)', error)
         }
     }
 
@@ -44,19 +44,23 @@ class ArticleController {
             const articles   = await Article.find(id)
             return articles;
         } catch (error) {
-            console.log('error in signle article ', error)
+            console.log('error in single article (api)', error)
         }
     }
-
 
     public static getCreateArticle() {
         return Viewer.render('createArticle', { title: 'Create article' })
     }
 
     
-    public static postArticle(request: Request) {
-        console.log('post article in controller ', request.data)
-        return {test: "test post"};
+    public static async postArticle(request: any) {
+        try {
+            const {title, content} = request.data.body;
+            const createdArticle = await Article.create({ title,content});
+            return {id: createdArticle.insertId, title, content}
+        } catch (error) {
+            console.log('error in post article (api)', error)
+        }
     }
 
     public static postArticleHtml(request: Request) {
@@ -69,9 +73,15 @@ class ArticleController {
         return {message: 'test update article'}
     }
 
-    public static deleteArticle(request: Request) {
-        console.log('delete article in controller ', request.data)
-        return {message: 'test delete article'}
+    public static async deleteArticle(request: Request) {
+        try {
+            const  { data }  = request;
+            const id         = data.params; 
+            await Article.delete(id);
+            return {message: 'article was deleted'}
+        } catch (error) {
+            console.log('error in delete article (api)', error)
+        }
     }
 }
 
