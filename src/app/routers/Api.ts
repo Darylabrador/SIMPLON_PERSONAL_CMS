@@ -24,11 +24,11 @@ class Api {
             }
         });
 
-        
+        Router.get('/api/articles', ArticleController.getApiArticles)
+        Router.get('/api/article/:id', ArticleController.getApiSingleArticle)
         Router.post('/api/article', ArticleController.postArticle);
         Router.put('/api/article/:id', ArticleController.putArticle);
         Router.delete('/api/article/:id', ArticleController.deleteArticle);
-        Router.delete('/api/postes/:id', ArticleController.deleteArticle);
     }
 }
 

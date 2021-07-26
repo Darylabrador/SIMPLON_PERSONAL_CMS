@@ -17,10 +17,6 @@ class ArticleController {
         }
     }
 
-    public static getCreateArticle() {
-        return Viewer.render('createArticle', { title: 'Create article' })
-    }
-
     public static async getSingleArticle(request: Request) {
         try {
             const  { data }  = request;
@@ -32,6 +28,32 @@ class ArticleController {
         }
     }
 
+    public static async getApiArticles() {
+        try {     
+            const articles = await Article.findAll();
+            return articles;
+        } catch (error) {
+            console.log('error in articles', error)
+        }
+    }
+
+    public static async getApiSingleArticle(request: Request) {
+        try {
+            const  { data }  = request;
+            const id         = data.params; 
+            const articles   = await Article.find(id)
+            return articles;
+        } catch (error) {
+            console.log('error in signle article ', error)
+        }
+    }
+
+
+    public static getCreateArticle() {
+        return Viewer.render('createArticle', { title: 'Create article' })
+    }
+
+    
     public static postArticle(request: Request) {
         console.log('post article in controller ', request.data)
         return {test: "test post"};

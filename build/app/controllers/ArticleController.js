@@ -68,9 +68,6 @@ var ArticleController = /** @class */ (function () {
             });
         });
     };
-    ArticleController.getCreateArticle = function () {
-        return Viewer_1.default.render('createArticle', { title: 'Create article' });
-    };
     ArticleController.getSingleArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
             var data, id, articles, error_2;
@@ -92,6 +89,51 @@ var ArticleController = /** @class */ (function () {
                 }
             });
         });
+    };
+    ArticleController.getApiArticles = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var articles, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, Article_1.default.findAll()];
+                    case 1:
+                        articles = _a.sent();
+                        return [2 /*return*/, articles];
+                    case 2:
+                        error_3 = _a.sent();
+                        console.log('error in articles', error_3);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ArticleController.getApiSingleArticle = function (request) {
+        return __awaiter(this, void 0, void 0, function () {
+            var data, id, articles, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        data = request.data;
+                        id = data.params;
+                        return [4 /*yield*/, Article_1.default.find(id)];
+                    case 1:
+                        articles = _a.sent();
+                        return [2 /*return*/, articles];
+                    case 2:
+                        error_4 = _a.sent();
+                        console.log('error in signle article ', error_4);
+                        return [3 /*break*/, 3];
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    ArticleController.getCreateArticle = function () {
+        return Viewer_1.default.render('createArticle', { title: 'Create article' });
     };
     ArticleController.postArticle = function (request) {
         console.log('post article in controller ', request.data);
