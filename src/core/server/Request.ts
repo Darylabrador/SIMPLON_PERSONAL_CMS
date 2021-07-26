@@ -52,16 +52,14 @@ class Request {
 
     private parseUrlEncoded(parsedBody: any) {
         let dataSplited = parsedBody.split('&')
-        let dataArray: any   = [];
+        let dataObject: any = new Object();
         dataSplited.forEach((data: any) => {
             let tab   = data.split('=');
-            let dataObject: any = new Object();
             let key   = tab[0];
             let value = tab[1];
             dataObject[key]   = value
-            dataArray.push(dataObject)
         })
-        return dataArray;
+        return dataObject;
     }
 
     private parseBody() {

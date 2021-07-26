@@ -100,16 +100,14 @@ var Request = /** @class */ (function () {
     };
     Request.prototype.parseUrlEncoded = function (parsedBody) {
         var dataSplited = parsedBody.split('&');
-        var dataArray = [];
+        var dataObject = new Object();
         dataSplited.forEach(function (data) {
             var tab = data.split('=');
-            var dataObject = new Object();
             var key = tab[0];
             var value = tab[1];
             dataObject[key] = value;
-            dataArray.push(dataObject);
         });
-        return dataArray;
+        return dataObject;
     };
     Request.prototype.parseBody = function () {
         var _this = this;
