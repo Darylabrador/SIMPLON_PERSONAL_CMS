@@ -6,80 +6,107 @@
  * @author Daryl ABRADOR
  */
 
- import FieldInterface from "../interfaces/FieldInterface";
-import Database from "./Database";
+import FieldInterface from "../interfaces/FieldInterface";
 
 class Query {
     table: string;
     fields: Array<FieldInterface> = [];
-    searchFields: string = "";
-    insertFields: string = "";
-
-    // TODO : implements 
-
-    // selectField(), 
-    // excludeField(), 
-    // where()
-    // AndWhere()
-
-    // example : where(xx) {
-    // ...
-    // return this
-    // })
+    selectedFields: Array<any> = [];
+    selectedCondition: string = "";
+    selectedAction: string = "";
 
     constructor(table: string, fields: Array<FieldInterface>) {
         this.table   = table;
         this.fields  = fields;
+    }
 
-        this.searchFields += fields[0].field;
-        this.insertFields += "?";
+    select(args: any){
+        this.selectedFields = args;
+        return this;
+    }
 
-        for(let i = 1; i < fields.length; i++) {
-            this.searchFields += `, ${fields[i].field}`;
-            this.insertFields += `, ?`;
+    where(args: any) {
+        let conditions:string = "";
+
+        if(typeof args === 'object') {
+            conditions += " ( " + this.and(args) + " ) "
+        } else if(Array.isArray(args)) {
+            args.map((arg: any, index:number) => {
+                if(arg && index === 0) conditions += " ( " +this.and(arg) + " ) " 
+                if(arg && index > 0) conditions += " OR "  +  " (" +this.and(arg) + " ) "    
+            })
         }
+
+        if(conditions !== "") this.selectedCondition += " WHERE " + conditions;
+        return this;
     }
 
-    async findAll() {
-        try {
-            const requestData = await Database.query(`SELECT ${this.searchFields} FROM ${this.table}`, [])
-            return requestData;
-        } catch (error) {
-            console.log("Error in class query: findAll()")
-            console.log(error);
+    and(args: any) {
+        let conditions: string =  "";
+        const keys:any = Object.keys(args);
+
+        if(keys && keys.length > 1) {
+            keys.map((key: any, index:number) => {
+                if(key && index === 0) conditions += key + " = " + args[key]
+                if(key && index > 0) conditions += " AND "  + key + " = '" + args[key] + "'"
+            })
+        } else{
+            conditions += keys[0] + " = '" + args[keys[0]] + "'"
+        } 
+        return conditions;
+    }
+
+    from(table: any, alias:any = null) {
+        if(!alias) {
+            this.table = table;
+        } else {
+            this.table = `${table} AS ${alias}`
         }
+        return this;
     }
 
-    async find(id: Number) {
-        try {
-            const requestData: any = await Database.query(`SELECT ${this.searchFields} FROM ${this.table} where id = ?;`, [id])
-            return requestData;
-        } catch (error) {
-            console.log("Error in class query: find()")
-            console.log(error);
+    create(values: object) {
+        const keys:any = Object.keys(values);
+        const vals:any = Object.values(values);
+
+        let arrayField:string  = `${keys[0]}`;
+        let arrayValues:string = `${vals[0]}`;
+
+        for(let i = 1; i < keys.length; i++) {
+            arrayField += `, ${keys[i]}`;
         }
+
+        for(let i = 1; i < vals.length; i++) {
+            arrayValues += `, ${vals[i]}`;
+        }
+        
+        return `INSERT INTO ${this.table} (${arrayField}) values (${arrayValues})`;
     }
 
-    async create(values: object) {
-        let valuesArray   = Object.values(values)
-        let questionMarks = this.insertFields.split(",").splice(0, this.fields.length-1).join();
-        let createFiels   = this.searchFields.split(",").splice(1, this.fields.length).join();
-        const requestData: any = await Database.query(`INSERT INTO ${this.table} (${createFiels}) VALUES (${questionMarks});`, valuesArray);
-        return requestData;
-    }
-    
-    async update(id: Number, values: Object) {
-        let valuesArray     = Object.values(values)
-        let updatedFields   = this.searchFields.split(",").splice(1, this.fields.length).join();
-        let setUpdateFields = updatedFields.split(',').map(element => `${element} = ?`).join();
-        valuesArray.push(Number(id))
-        const requestData: any = await Database.query(`UPDATE ${this.table} SET ${setUpdateFields} WHERE id = ?;`, valuesArray);
-        return requestData;
+    update(search:any, values: Object) {
+        const keys:any = Object.keys(values);
+        const vals:any = Object.values(values);
+
+        let arrayField:string  = `${keys[0]} = ${vals[0]}`;
+
+        for(let i = 1; i < keys.length; i++) {
+            arrayField += `, ${keys[i]} = ${vals[i]}`;
+        }
+
+        return `UPDATE ${this.table} SET ${arrayField} WHERE ${search}`;
     }
 
-    async delete(id: Number) {
-        const requestData: any = await Database.query(`DELETE FROM ${this.table} WHERE id = ?;`, [id]);
-        return requestData;
+    destroy(id: number) {
+        return `DELETE FROM ${this.table} WHERE id = ${id}`;
+    }
+
+    toString() {
+        const liestFields:string = (this.selectedFields.length > 0) ? this.selectedFields.join(', ') : '*'
+        const query = 'SELECT '+ liestFields + ' FROM ' + this.table + this.selectedCondition;
+        this.selectedFields     = [];
+        this.table              = "";
+        this.selectedCondition  = "";
+        return query;  
     }
 }
 

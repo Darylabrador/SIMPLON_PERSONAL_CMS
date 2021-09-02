@@ -6,159 +6,96 @@
  * @module core/config/Query
  * @author Daryl ABRADOR
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Database_1 = __importDefault(require("./Database"));
 var Query = /** @class */ (function () {
-    // TODO : implements 
-    // selectField(), 
-    // excludeField(), 
-    // where()
-    // AndWhere()
-    // example : where(xx) {
-    // ...
-    // return this
-    // })
     function Query(table, fields) {
         this.fields = [];
-        this.searchFields = "";
-        this.insertFields = "";
+        this.selectedFields = [];
+        this.selectedCondition = "";
+        this.selectedAction = "";
         this.table = table;
         this.fields = fields;
-        this.searchFields += fields[0].field;
-        this.insertFields += "?";
-        for (var i = 1; i < fields.length; i++) {
-            this.searchFields += ", " + fields[i].field;
-            this.insertFields += ", ?";
-        }
     }
-    Query.prototype.findAll = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var requestData, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT " + this.searchFields + " FROM " + this.table, [])];
-                    case 1:
-                        requestData = _a.sent();
-                        return [2 /*return*/, requestData];
-                    case 2:
-                        error_1 = _a.sent();
-                        console.log("Error in class query: findAll()");
-                        console.log(error_1);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
+    Query.prototype.select = function (args) {
+        this.selectedFields = args;
+        return this;
     };
-    Query.prototype.find = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var requestData, error_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.default.query("SELECT " + this.searchFields + " FROM " + this.table + " where id = ?;", [id])];
-                    case 1:
-                        requestData = _a.sent();
-                        return [2 /*return*/, requestData];
-                    case 2:
-                        error_2 = _a.sent();
-                        console.log("Error in class query: find()");
-                        console.log(error_2);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
+    Query.prototype.where = function (args) {
+        var _this = this;
+        var conditions = "";
+        if (typeof args === 'object') {
+            conditions += " ( " + this.and(args) + " ) ";
+        }
+        else if (Array.isArray(args)) {
+            args.map(function (arg, index) {
+                if (arg && index === 0)
+                    conditions += " ( " + _this.and(arg) + " ) ";
+                if (arg && index > 0)
+                    conditions += " OR " + " (" + _this.and(arg) + " ) ";
             });
-        });
+        }
+        if (conditions !== "")
+            this.selectedCondition += " WHERE " + conditions;
+        return this;
+    };
+    Query.prototype.and = function (args) {
+        var conditions = "";
+        var keys = Object.keys(args);
+        if (keys && keys.length > 1) {
+            keys.map(function (key, index) {
+                if (key && index === 0)
+                    conditions += key + " = " + args[key];
+                if (key && index > 0)
+                    conditions += " AND " + key + " = '" + args[key] + "'";
+            });
+        }
+        else {
+            conditions += keys[0] + " = '" + args[keys[0]] + "'";
+        }
+        return conditions;
+    };
+    Query.prototype.from = function (table, alias) {
+        if (alias === void 0) { alias = null; }
+        if (!alias) {
+            this.table = table;
+        }
+        else {
+            this.table = table + " AS " + alias;
+        }
+        return this;
     };
     Query.prototype.create = function (values) {
-        return __awaiter(this, void 0, void 0, function () {
-            var valuesArray, questionMarks, createFiels, requestData;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        valuesArray = Object.values(values);
-                        questionMarks = this.insertFields.split(",").splice(0, this.fields.length - 1).join();
-                        createFiels = this.searchFields.split(",").splice(1, this.fields.length).join();
-                        return [4 /*yield*/, Database_1.default.query("INSERT INTO " + this.table + " (" + createFiels + ") VALUES (" + questionMarks + ");", valuesArray)];
-                    case 1:
-                        requestData = _a.sent();
-                        return [2 /*return*/, requestData];
-                }
-            });
-        });
+        var keys = Object.keys(values);
+        var vals = Object.values(values);
+        var arrayField = "" + keys[0];
+        var arrayValues = "" + vals[0];
+        for (var i = 1; i < keys.length; i++) {
+            arrayField += ", " + keys[i];
+        }
+        for (var i = 1; i < vals.length; i++) {
+            arrayValues += ", " + vals[i];
+        }
+        return "INSERT INTO " + this.table + " (" + arrayField + ") values (" + arrayValues + ")";
     };
-    Query.prototype.update = function (id, values) {
-        return __awaiter(this, void 0, void 0, function () {
-            var valuesArray, updatedFields, setUpdateFields, requestData;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        valuesArray = Object.values(values);
-                        updatedFields = this.searchFields.split(",").splice(1, this.fields.length).join();
-                        setUpdateFields = updatedFields.split(',').map(function (element) { return element + " = ?"; }).join();
-                        valuesArray.push(Number(id));
-                        return [4 /*yield*/, Database_1.default.query("UPDATE " + this.table + " SET " + setUpdateFields + " WHERE id = ?;", valuesArray)];
-                    case 1:
-                        requestData = _a.sent();
-                        return [2 /*return*/, requestData];
-                }
-            });
-        });
+    Query.prototype.update = function (search, values) {
+        var keys = Object.keys(values);
+        var vals = Object.values(values);
+        var arrayField = keys[0] + " = " + vals[0];
+        for (var i = 1; i < keys.length; i++) {
+            arrayField += ", " + keys[i] + " = " + vals[i];
+        }
+        return "UPDATE " + this.table + " SET " + arrayField + " WHERE " + search;
     };
-    Query.prototype.delete = function (id) {
-        return __awaiter(this, void 0, void 0, function () {
-            var requestData;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, Database_1.default.query("DELETE FROM " + this.table + " WHERE id = ?;", [id])];
-                    case 1:
-                        requestData = _a.sent();
-                        return [2 /*return*/, requestData];
-                }
-            });
-        });
+    Query.prototype.destroy = function (id) {
+        return "DELETE FROM " + this.table + " WHERE id = " + id;
+    };
+    Query.prototype.toString = function () {
+        var liestFields = (this.selectedFields.length > 0) ? this.selectedFields.join(', ') : '*';
+        var query = 'SELECT ' + liestFields + ' FROM ' + this.table + this.selectedCondition;
+        this.selectedFields = [];
+        this.table = "";
+        this.selectedCondition = "";
+        return query;
     };
     return Query;
 }());

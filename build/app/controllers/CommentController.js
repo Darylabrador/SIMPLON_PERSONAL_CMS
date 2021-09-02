@@ -43,168 +43,118 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Viewer_1 = __importDefault(require("../../core/templating/Viewer"));
-var Article_1 = __importDefault(require("../models/Article"));
-var ArticleController = /** @class */ (function () {
-    function ArticleController() {
+var Comments_1 = __importDefault(require("../models/Comments"));
+var CommentController = /** @class */ (function () {
+    function CommentController() {
     }
-    ArticleController.getArticles = function () {
+    CommentController.getComments = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var articles, error_1;
+            var comments, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Article_1.default.findAll()];
+                        return [4 /*yield*/, Comments_1.default.findAll()];
                     case 1:
-                        articles = _a.sent();
-                        return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })];
+                        comments = _a.sent();
+                        return [2 /*return*/, comments];
                     case 2:
                         error_1 = _a.sent();
-                        console.log('error in articles (html)', error_1);
+                        console.log('error in comments (api)', error_1);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    ArticleController.getSingleArticle = function (request) {
+    CommentController.getSingleComment = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, article, error_2;
+            var data, id, comments, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         data = request.data;
                         id = data.params;
-                        return [4 /*yield*/, Article_1.default.find(id)];
+                        return [4 /*yield*/, Comments_1.default.find(id)];
                     case 1:
-                        article = _a.sent();
-                        return [2 /*return*/, Viewer_1.default.render('templateSingleObject', { article: article })];
+                        comments = _a.sent();
+                        return [2 /*return*/, comments];
                     case 2:
                         error_2 = _a.sent();
-                        console.log('error in single article (html)', error_2);
+                        console.log('error in single comment (api)', error_2);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    ArticleController.getApiArticles = function () {
+    CommentController.postComment = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var articles, error_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Article_1.default.findAll()];
-                    case 1:
-                        articles = _a.sent();
-                        return [2 /*return*/, articles];
-                    case 2:
-                        error_3 = _a.sent();
-                        console.log('error in articles (api)', error_3);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ArticleController.getApiSingleArticle = function (request) {
-        return __awaiter(this, void 0, void 0, function () {
-            var data, id, articles, error_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        data = request.data;
-                        id = data.params;
-                        return [4 /*yield*/, Article_1.default.find(id)];
-                    case 1:
-                        articles = _a.sent();
-                        return [2 /*return*/, articles];
-                    case 2:
-                        error_4 = _a.sent();
-                        console.log('error in single article (api)', error_4);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    ArticleController.getCreateArticle = function () {
-        return Viewer_1.default.render('createArticle', { title: 'Create article' });
-    };
-    ArticleController.postArticle = function (request) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, title, content, createdArticle, error_5;
+            var _a, content, article_id, createdComment, error_3;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
-                        _a = request.data.body, title = _a.title, content = _a.content;
-                        return [4 /*yield*/, Article_1.default.create({ title: title, content: content })];
+                        _a = request.data.body, content = _a.content, article_id = _a.article_id;
+                        return [4 /*yield*/, Comments_1.default.create({ content: content, article_id: article_id })];
                     case 1:
-                        createdArticle = _b.sent();
-                        return [2 /*return*/, { id: createdArticle.insertId, title: title, content: content }];
+                        createdComment = _b.sent();
+                        return [2 /*return*/, { id: createdComment.insertId, content: content }];
                     case 2:
-                        error_5 = _b.sent();
-                        console.log('error in post article (api)', error_5);
+                        error_3 = _b.sent();
+                        console.log('error in post comment (api)', error_3);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    ArticleController.postArticleHtml = function (request) {
-        console.log('post article in controller ', request.data);
-        return { test: "test post html" };
-    };
-    ArticleController.putArticle = function (request) {
+    CommentController.putComment = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, _a, title, content, error_6;
+            var data, id, _a, content, article_id, error_4;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 2, , 3]);
                         data = request.data;
                         id = data.params;
-                        _a = data.body, title = _a.title, content = _a.content;
-                        return [4 /*yield*/, Article_1.default.update(id, { title: title, content: content })];
+                        _a = data.body, content = _a.content, article_id = _a.article_id;
+                        return [4 /*yield*/, Comments_1.default.update(id, { content: content, article_id: article_id })];
                     case 1:
                         _b.sent();
-                        return [2 /*return*/, { message: 'article was updated' }];
+                        return [2 /*return*/, { message: 'comment was updated' }];
                     case 2:
-                        error_6 = _b.sent();
-                        console.log('Error in put article (api)', error_6);
+                        error_4 = _b.sent();
+                        console.log('Error in put comment (api)', error_4);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    ArticleController.deleteArticle = function (request) {
+    CommentController.deleteComment = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, error_7;
+            var data, id, error_5;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         data = request.data;
                         id = data.params;
-                        return [4 /*yield*/, Article_1.default.delete(id)];
+                        return [4 /*yield*/, Comments_1.default.delete(id)];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/, { message: 'article was deleted' }];
+                        return [2 /*return*/, { message: 'comment was deleted' }];
                     case 2:
-                        error_7 = _a.sent();
-                        console.log('error in delete article (api)', error_7);
+                        error_5 = _a.sent();
+                        console.log('error in delete article (api)', error_5);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
             });
         });
     };
-    return ArticleController;
+    return CommentController;
 }());
-exports.default = ArticleController;
+exports.default = CommentController;

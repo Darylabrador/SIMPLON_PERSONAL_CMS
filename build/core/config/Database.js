@@ -44,10 +44,10 @@ var Database = /** @class */ (function () {
             password: process.env.MYSQL_PASSWORD
         });
     };
-    Database.query = function (sqlQuery, params) {
+    Database.query = function (sqlQuery) {
         var db = this.connection();
         return new Promise(function (resolve, reject) {
-            db.query(sqlQuery, params, function (err, rows, fields) {
+            db.query(sqlQuery, function (err, rows, fields) {
                 if (err) {
                     return reject(err);
                 }

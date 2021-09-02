@@ -21,10 +21,10 @@ class Database {
         });
     }
 
-    public static query(sqlQuery: string, params: any) {
+    public static query(sqlQuery: string) {
         const db = this.connection();
         return new Promise(function (resolve, reject) {
-            db.query(sqlQuery, params, function(err, rows, fields){
+            db.query(sqlQuery, function(err, rows, fields){
                 if (err) {
                     return reject(err);
                 }

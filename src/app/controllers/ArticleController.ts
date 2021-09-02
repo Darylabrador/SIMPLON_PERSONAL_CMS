@@ -21,8 +21,8 @@ class ArticleController {
         try {
             const  { data }  = request;
             const id         = data.params; 
-            const articles   = await Article.find(id)
-            return Viewer.render('templateObject', { articles })
+            const article   = await Article.find(id)
+            return Viewer.render('templateSingleObject', { article })
         } catch (error) {
             console.log('error in single article (html)', error)
         }
@@ -74,7 +74,7 @@ class ArticleController {
             const id                = data.params; 
             const {title, content}  = data.body;
             await Article.update(id, {title, content});
-            return {message: 'article cas updated'}
+            return {message: 'article was updated'}
         } catch (error) {
             console.log('Error in put article (api)', error)
         }

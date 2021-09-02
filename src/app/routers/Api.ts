@@ -6,6 +6,7 @@
 
 import Router from '../../core/routing/Router';
 import ArticleController from '../controllers/ArticleController';
+import CommentController from '../controllers/CommentController';
 
 class Api {
     static build() {
@@ -29,6 +30,13 @@ class Api {
         Router.post('/api/article', ArticleController.postArticle);
         Router.put('/api/article/:id', ArticleController.putArticle);
         Router.delete('/api/article/:id', ArticleController.deleteArticle);
+
+
+        Router.get('/api/comments', CommentController.getComments)
+        Router.get('/api/comment/:id', CommentController.getSingleComment)
+        Router.post('/api/comment', CommentController.postComment);
+        Router.put('/api/comment/:id', CommentController.putComment);
+        Router.delete('/api/comment/:id', CommentController.deleteComment);
     }
 }
 

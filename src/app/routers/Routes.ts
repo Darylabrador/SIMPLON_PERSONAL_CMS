@@ -18,9 +18,9 @@ class Routes {
         });
 
         Router.get('/articles', ArticleController.getArticles)
-        Router.get('/article/create', ArticleController.getCreateArticle)
-        Router.get('/article/:id', ArticleController.getSingleArticle);
-        Router.post('/article', ArticleController.postArticleHtml)
+        Router.get('/articles/create', ArticleController.getCreateArticle)
+        Router.get('/articles/:id', ArticleController.getSingleArticle);
+        Router.post('/articles', ArticleController.postArticleHtml)
     }
 }
 
