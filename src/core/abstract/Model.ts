@@ -41,19 +41,23 @@ abstract class Model {
 
     public async create(values: object) {
         const queryString:string = this.query.create(values);
-        return await this.runQuery(queryString)
+        const data:any = await this.runQuery(queryString) 
+        return data;
     }
 
 
-    public async update(search: any, values: Object) {
+    public async update(search: Object, values: Object) {
         const queryString:string = this.query.update(search, values);
-        return await this.runQuery(queryString);
+        const data:any = await this.runQuery(queryString) 
+        return data;
     }
  
 
-    public async delete(id: number) {
-        const queryString:string = this.query.destroy(id);
-        return await this.runQuery(queryString);
+    public async delete(search:Object) {
+        this.query = new Query(this.table, this.fields)
+        const queryString:string = this.query.delete(search);
+        const data:any = await this.runQuery(queryString);
+        return data;
     }
 
     
@@ -87,7 +91,7 @@ abstract class Model {
             const data:any = await Database.query(queryString)
             return data
         } catch (error) {
-            return {error: error.toString()}
+            return {error: error}
         }
     }
 }

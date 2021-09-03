@@ -68,26 +68,39 @@ var Query = /** @class */ (function () {
         var keys = Object.keys(values);
         var vals = Object.values(values);
         var arrayField = "" + keys[0];
-        var arrayValues = "" + vals[0];
+        var arrayValues = "'" + vals[0] + "'";
         for (var i = 1; i < keys.length; i++) {
             arrayField += ", " + keys[i];
         }
         for (var i = 1; i < vals.length; i++) {
-            arrayValues += ", " + vals[i];
+            arrayValues += ", '" + vals[i] + "'";
         }
         return "INSERT INTO " + this.table + " (" + arrayField + ") values (" + arrayValues + ")";
     };
     Query.prototype.update = function (search, values) {
         var keys = Object.keys(values);
         var vals = Object.values(values);
-        var arrayField = keys[0] + " = " + vals[0];
-        for (var i = 1; i < keys.length; i++) {
-            arrayField += ", " + keys[i] + " = " + vals[i];
+        var keys2 = Object.keys(search);
+        var vals2 = Object.values(search);
+        var conditionSearch = keys2[0] + " = " + vals2[0];
+        for (var i = 1; i < keys2.length; i++) {
+            conditionSearch += " AND " + keys2[i] + " = '" + vals2[i] + "'";
         }
-        return "UPDATE " + this.table + " SET " + arrayField + " WHERE " + search;
+        var arrayField = keys[0] + " = '" + vals[0] + "'";
+        for (var i = 1; i < keys.length; i++) {
+            arrayField += ", " + keys[i] + " = '" + vals[i] + "'";
+        }
+        return "UPDATE " + this.table + " SET " + arrayField + " WHERE " + conditionSearch;
     };
-    Query.prototype.destroy = function (id) {
-        return "DELETE FROM " + this.table + " WHERE id = " + id;
+    Query.prototype.delete = function (search) {
+        var keys2 = Object.keys(search);
+        var vals2 = Object.values(search);
+        var conditionSearch = keys2[0] + " = " + vals2[0];
+        for (var i = 1; i < keys2.length; i++) {
+            conditionSearch += " AND " + keys2[i] + " = '" + vals2[i] + "'";
+        }
+        console.log("DELETE FROM " + this.table + " WHERE " + conditionSearch);
+        return "DELETE FROM " + this.table + " WHERE " + conditionSearch;
     };
     Query.prototype.toString = function () {
         var liestFields = (this.selectedFields.length > 0) ? this.selectedFields.join(', ') : '*';

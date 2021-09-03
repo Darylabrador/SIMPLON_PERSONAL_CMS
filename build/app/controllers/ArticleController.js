@@ -170,7 +170,7 @@ var ArticleController = /** @class */ (function () {
                         data = request.data;
                         id = data.params;
                         _a = data.body, title = _a.title, content = _a.content;
-                        return [4 /*yield*/, Article_1.default.update(id, { title: title, content: content })];
+                        return [4 /*yield*/, Article_1.default.update({ id: id }, { title: title, content: content })];
                     case 1:
                         _b.sent();
                         return [2 /*return*/, { message: 'article was updated' }];
@@ -192,7 +192,7 @@ var ArticleController = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         data = request.data;
                         id = data.params;
-                        return [4 /*yield*/, Article_1.default.delete(id)];
+                        return [4 /*yield*/, Article_1.default.delete({ id: id })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, { message: 'article was deleted' }];

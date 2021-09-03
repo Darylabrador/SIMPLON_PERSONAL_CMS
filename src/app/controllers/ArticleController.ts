@@ -21,7 +21,7 @@ class ArticleController {
         try {
             const  { data }  = request;
             const id         = data.params; 
-            const article   = await Article.find(id)
+            const article    = await Article.find(id)
             return Viewer.render('templateSingleObject', { article })
         } catch (error) {
             console.log('error in single article (html)', error)
@@ -56,7 +56,7 @@ class ArticleController {
     public static async postArticle(request: any) {
         try {
             const {title, content} = request.data.body;
-            const createdArticle = await Article.create({ title,content});
+            const createdArticle = await Article.create({ title, content});
             return {id: createdArticle.insertId, title, content}
         } catch (error) {
             console.log('error in post article (api)', error)
@@ -73,7 +73,7 @@ class ArticleController {
             const  { data }         = request;
             const id                = data.params; 
             const {title, content}  = data.body;
-            await Article.update(id, {title, content});
+            await Article.update({id}, {title, content});
             return {message: 'article was updated'}
         } catch (error) {
             console.log('Error in put article (api)', error)
@@ -85,7 +85,7 @@ class ArticleController {
         try {
             const  { data }  = request;
             const id         = data.params; 
-            await Article.delete(id);
+            await Article.delete({id});
             return {message: 'article was deleted'}
         } catch (error) {
             console.log('error in delete article (api)', error)

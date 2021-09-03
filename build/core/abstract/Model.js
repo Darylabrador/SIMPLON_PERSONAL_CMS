@@ -74,39 +74,63 @@ var Model = /** @class */ (function () {
     };
     Model.prototype.find = function (id) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryString, data;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        queryString = this.query.select(this.selection).from(this.table).where({ id: id }).toString();
-                        return [4 /*yield*/, this.runQuery(queryString)];
-                    case 1:
-                        data = _a.sent();
-                        return [2 /*return*/, Array.isArray(data) ? data[0] : data];
-                }
-            });
-        });
-    };
-    Model.prototype.create = function (values) {
-        return __awaiter(this, void 0, void 0, function () {
             var queryString;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        queryString = this.query.create(values);
+                        queryString = this.query.select(this.selection).from(this.table).where({ id: id }).toString();
                         return [4 /*yield*/, this.runQuery(queryString)];
                     case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });
     };
-    Model.prototype.update = function (search, values) {
-        var queryString = this.query.update(search, values);
-        return this.runQuery(queryString);
+    Model.prototype.create = function (values) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryString, data;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        queryString = this.query.create(values);
+                        return [4 /*yield*/, this.runQuery(queryString)];
+                    case 1:
+                        data = _a.sent();
+                        return [2 /*return*/, data];
+                }
+            });
+        });
     };
-    Model.prototype.delete = function (id) {
-        var queryString = this.query.destroy(id);
-        return this.runQuery(queryString);
+    Model.prototype.update = function (search, values) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryString, data;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        queryString = this.query.update(search, values);
+                        return [4 /*yield*/, this.runQuery(queryString)];
+                    case 1:
+                        data = _a.sent();
+                        return [2 /*return*/, data];
+                }
+            });
+        });
+    };
+    Model.prototype.delete = function (search) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryString, data;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.query = new Query_1.default(this.table, this.fields);
+                        queryString = this.query.delete(search);
+                        return [4 /*yield*/, this.runQuery(queryString)];
+                    case 1:
+                        data = _a.sent();
+                        console.log(data);
+                        return [2 /*return*/, data];
+                }
+            });
+        });
     };
     Model.prototype.selectFields = function (data) {
         this.selection = data;
@@ -140,7 +164,7 @@ var Model = /** @class */ (function () {
                         return [2 /*return*/, data];
                     case 2:
                         error_1 = _a.sent();
-                        return [2 /*return*/, { error: error_1.toString() }];
+                        return [2 /*return*/, { error: error_1 }];
                     case 3: return [2 /*return*/];
                 }
             });

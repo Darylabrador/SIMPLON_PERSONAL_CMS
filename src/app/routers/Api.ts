@@ -26,10 +26,10 @@ class Api {
         });
 
         Router.get('/api/articles', ArticleController.getApiArticles)
-        Router.get('/api/article/:id', ArticleController.getApiSingleArticle)
-        Router.post('/api/article', ArticleController.postArticle);
-        Router.put('/api/article/:id', ArticleController.putArticle);
-        Router.delete('/api/article/:id', ArticleController.deleteArticle);
+        Router.get('/api/articles/:id', ArticleController.getApiSingleArticle)
+        Router.post('/api/articles', ArticleController.postArticle);
+        Router.put('/api/articles/:id', ArticleController.putArticle);
+        Router.delete('/api/articles/:id', ArticleController.deleteArticle);
 
 
         Router.get('/api/comments', CommentController.getComments)

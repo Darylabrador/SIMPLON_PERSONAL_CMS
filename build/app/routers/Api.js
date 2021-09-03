@@ -29,10 +29,10 @@ var Api = /** @class */ (function () {
             };
         });
         Router_1.default.get('/api/articles', ArticleController_1.default.getApiArticles);
-        Router_1.default.get('/api/article/:id', ArticleController_1.default.getApiSingleArticle);
-        Router_1.default.post('/api/article', ArticleController_1.default.postArticle);
-        Router_1.default.put('/api/article/:id', ArticleController_1.default.putArticle);
-        Router_1.default.delete('/api/article/:id', ArticleController_1.default.deleteArticle);
+        Router_1.default.get('/api/articles/:id', ArticleController_1.default.getApiSingleArticle);
+        Router_1.default.post('/api/articles', ArticleController_1.default.postArticle);
+        Router_1.default.put('/api/articles/:id', ArticleController_1.default.putArticle);
+        Router_1.default.delete('/api/articles/:id', ArticleController_1.default.deleteArticle);
         Router_1.default.get('/api/comments', CommentController_1.default.getComments);
         Router_1.default.get('/api/comment/:id', CommentController_1.default.getSingleComment);
         Router_1.default.post('/api/comment', CommentController_1.default.postComment);

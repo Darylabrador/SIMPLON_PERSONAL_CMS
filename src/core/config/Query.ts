@@ -70,34 +70,53 @@ class Query {
         const vals:any = Object.values(values);
 
         let arrayField:string  = `${keys[0]}`;
-        let arrayValues:string = `${vals[0]}`;
+        let arrayValues:string = `'${vals[0]}'`;
 
         for(let i = 1; i < keys.length; i++) {
             arrayField += `, ${keys[i]}`;
         }
 
         for(let i = 1; i < vals.length; i++) {
-            arrayValues += `, ${vals[i]}`;
+            arrayValues += `, '${vals[i]}'`;
         }
         
         return `INSERT INTO ${this.table} (${arrayField}) values (${arrayValues})`;
     }
 
-    update(search:any, values: Object) {
+    update(search:Object, values: Object) {
         const keys:any = Object.keys(values);
         const vals:any = Object.values(values);
 
-        let arrayField:string  = `${keys[0]} = ${vals[0]}`;
+        const keys2:any = Object.keys(search);
+        const vals2:any = Object.values(search);
 
-        for(let i = 1; i < keys.length; i++) {
-            arrayField += `, ${keys[i]} = ${vals[i]}`;
+        let conditionSearch: string = `${keys2[0]} = ${vals2[0]}`;
+
+        for(let i = 1; i < keys2.length; i++) {
+            conditionSearch += ` AND ${keys2[i]} = '${vals2[i]}'`;
         }
 
-        return `UPDATE ${this.table} SET ${arrayField} WHERE ${search}`;
+        let arrayField:string  = `${keys[0]} = '${vals[0]}'`;
+
+        for(let i = 1; i < keys.length; i++) {
+            arrayField += `, ${keys[i]} = '${vals[i]}'`;
+        }
+
+        return `UPDATE ${this.table} SET ${arrayField} WHERE ${conditionSearch}`;
     }
 
-    destroy(id: number) {
-        return `DELETE FROM ${this.table} WHERE id = ${id}`;
+    delete(search:Object) {
+        const keys2:any = Object.keys(search);
+        const vals2:any = Object.values(search);
+
+        let conditionSearch: string = `${keys2[0]} = ${vals2[0]}`;
+
+        for(let i = 1; i < keys2.length; i++) {
+            conditionSearch += ` AND ${keys2[i]} = '${vals2[i]}'`;
+        }
+
+        console.log(`DELETE FROM ${this.table} WHERE ${conditionSearch}`)
+        return `DELETE FROM ${this.table} WHERE ${conditionSearch}`;
     }
 
     toString() {
