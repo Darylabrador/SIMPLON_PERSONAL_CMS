@@ -94,6 +94,8 @@ abstract class Model {
             return {error: error}
         }
     }
+
+    
 }
 
 export default Model;

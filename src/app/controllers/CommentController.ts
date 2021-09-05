@@ -21,7 +21,7 @@ class CommentController {
         try {
             const { data } = request;
             const id = data.params;
-            const comments = await Comment.find(id)
+            const comments = await Comment.find({id})
             return comments;
         } catch (error) {
             console.log('error in single comment (api)', error)
@@ -43,7 +43,7 @@ class CommentController {
             const { data } = request;
             const id = data.params;
             const { content, article_id } = data.body;
-            await Comment.update(id, { content, article_id });
+            await Comment.update({id}, { content, article_id });
             return { message: 'comment was updated' }
         } catch (error) {
             console.log('Error in put comment (api)', error)
@@ -55,7 +55,7 @@ class CommentController {
         try {
             const { data } = request;
             const id = data.params;
-            await Comment.delete(id);
+            await Comment.delete({id});
             return { message: 'comment was deleted' }
         } catch (error) {
             console.log('error in delete article (api)', error)
