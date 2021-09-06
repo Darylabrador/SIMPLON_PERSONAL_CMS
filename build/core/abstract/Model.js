@@ -57,6 +57,7 @@ var Model = /** @class */ (function () {
     function Model(table, fields) {
         this.fields = [];
         this.selection = [];
+        this.jointure = "";
         this.table = table;
         this.fields = fields;
         this.query = new Query_1.default(table, fields);
@@ -66,6 +67,7 @@ var Model = /** @class */ (function () {
         var queryString = "";
         if (!data) {
             queryString = this.query.select(this.selection).from(this.table).toString();
+            console.log(this.jointure);
         }
         else {
             queryString = this.query.select(this.selection).from(this.table).where(data).toString();
@@ -126,7 +128,6 @@ var Model = /** @class */ (function () {
                         return [4 /*yield*/, this.runQuery(queryString)];
                     case 1:
                         data = _a.sent();
-                        console.log(data);
                         return [2 /*return*/, data];
                 }
             });
@@ -168,6 +169,25 @@ var Model = /** @class */ (function () {
                     case 3: return [2 /*return*/];
                 }
             });
+        });
+    };
+    Model.prototype.setJoin = function (queryString) {
+        this.query.defineJoin(queryString);
+    };
+    Model.prototype.defineJoin = function (model) {
+        var _this = this;
+        var arrayFields = [];
+        model.fields.forEach(function (element) {
+            if (!element.field.includes('_id')) {
+                arrayFields.push(" " + model.table + "." + element.field + " AS " + model.table + element.field + " ");
+            }
+        });
+        var arrayFieldSelect = arrayFields.join(', ');
+        this.query.defineJoinField(arrayFieldSelect);
+        model.fields.forEach(function (element) {
+            if (element.field.includes('_id')) {
+                _this.setJoin(" LEFT JOIN " + model.table + " ON " + _this.table + "." + _this.fields[0].field + " = " + model.table + "." + element.field);
+            }
         });
     };
     return Model;

@@ -24,6 +24,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Model_1 = __importDefault(require("../../core/abstract/Model"));
 var FieldTypes_1 = require("../../core/enum/FieldTypes");
+var Comments_1 = __importDefault(require("./Comments"));
 var Article = /** @class */ (function (_super) {
     __extends(Article, _super);
     function Article() {
@@ -43,4 +44,5 @@ var article = new Article('articles', [
     { field: "title", type: FieldTypes_1.FieldTypes.String },
     { field: "content", type: FieldTypes_1.FieldTypes.String },
 ]);
+article.defineJoin(Comments_1.default);
 exports.default = article;

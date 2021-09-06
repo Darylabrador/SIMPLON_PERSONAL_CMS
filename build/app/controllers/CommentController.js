@@ -112,20 +112,20 @@ var CommentController = /** @class */ (function () {
     };
     CommentController.putComment = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, _a, content, article_id, error_4;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var data, id, content, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 2, , 3]);
+                        _a.trys.push([0, 2, , 3]);
                         data = request.data;
                         id = data.params;
-                        _a = data.body, content = _a.content, article_id = _a.article_id;
-                        return [4 /*yield*/, Comments_1.default.update(id, { content: content, article_id: article_id })];
+                        content = data.body.content;
+                        return [4 /*yield*/, Comments_1.default.update({ id: id }, { content: content })];
                     case 1:
-                        _b.sent();
+                        _a.sent();
                         return [2 /*return*/, { message: 'comment was updated' }];
                     case 2:
-                        error_4 = _b.sent();
+                        error_4 = _a.sent();
                         console.log('Error in put comment (api)', error_4);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
@@ -142,7 +142,7 @@ var CommentController = /** @class */ (function () {
                         _a.trys.push([0, 2, , 3]);
                         data = request.data;
                         id = data.params;
-                        return [4 /*yield*/, Comments_1.default.delete(id)];
+                        return [4 /*yield*/, Comments_1.default.delete({ id: id })];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, { message: 'comment was deleted' }];

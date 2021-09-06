@@ -13,6 +13,8 @@ var Query = /** @class */ (function () {
         this.selectedFields = [];
         this.selectedCondition = "";
         this.selectedAction = "";
+        this.selectedJoin = "";
+        this.selectedJoinField = "";
         this.table = table;
         this.fields = fields;
     }
@@ -24,14 +26,14 @@ var Query = /** @class */ (function () {
         var _this = this;
         var conditions = "";
         if (typeof args === 'object') {
-            conditions += " ( " + this.and(args) + " ) ";
+            conditions += " ( " + this.table + '.' + this.and(args) + " ) ";
         }
         else if (Array.isArray(args)) {
             args.map(function (arg, index) {
                 if (arg && index === 0)
-                    conditions += " ( " + _this.and(arg) + " ) ";
+                    conditions += " ( " + _this.table + '.' + _this.and(arg) + " ) ";
                 if (arg && index > 0)
-                    conditions += " OR " + " (" + _this.and(arg) + " ) ";
+                    conditions += " OR " + " (" + _this.table + '.' + _this.and(arg) + " ) ";
             });
         }
         if (conditions !== "")
@@ -75,6 +77,7 @@ var Query = /** @class */ (function () {
         for (var i = 1; i < vals.length; i++) {
             arrayValues += ", '" + vals[i] + "'";
         }
+        console.log("INSERT INTO " + this.table + " (" + arrayField + ") values (" + arrayValues + ")");
         return "INSERT INTO " + this.table + " (" + arrayField + ") values (" + arrayValues + ")";
     };
     Query.prototype.update = function (search, values) {
@@ -90,6 +93,7 @@ var Query = /** @class */ (function () {
         for (var i = 1; i < keys.length; i++) {
             arrayField += ", " + keys[i] + " = '" + vals[i] + "'";
         }
+        console.log("UPDATE " + this.table + " SET " + arrayField + " WHERE " + conditionSearch);
         return "UPDATE " + this.table + " SET " + arrayField + " WHERE " + conditionSearch;
     };
     Query.prototype.delete = function (search) {
@@ -99,12 +103,31 @@ var Query = /** @class */ (function () {
         for (var i = 1; i < keys2.length; i++) {
             conditionSearch += " AND " + keys2[i] + " = '" + vals2[i] + "'";
         }
-        console.log("DELETE FROM " + this.table + " WHERE " + conditionSearch);
         return "DELETE FROM " + this.table + " WHERE " + conditionSearch;
     };
+    Query.prototype.defineJoin = function (queryString) {
+        this.selectedJoin += queryString;
+    };
+    Query.prototype.defineJoinField = function (joinFields) {
+        if (joinFields === void 0) { joinFields = null; }
+        if (joinFields)
+            this.selectedJoinField += ", " + joinFields + " ";
+    };
     Query.prototype.toString = function () {
-        var liestFields = (this.selectedFields.length > 0) ? this.selectedFields.join(', ') : '*';
-        var query = 'SELECT ' + liestFields + ' FROM ' + this.table + this.selectedCondition;
+        var _this = this;
+        var liestFields = (this.selectedFields.length > 0) ? this.selectedFields.join(", ") : '*';
+        var query = "";
+        if (this.selectedJoin != "") {
+            var arrayFields_1 = [];
+            this.fields.forEach(function (element) {
+                arrayFields_1.push(_this.table + "." + element.field + " AS " + _this.table + element.field + " ");
+            });
+            var arrayFieldSelect = arrayFields_1.join(', ');
+            query = 'SELECT ' + arrayFieldSelect + this.selectedJoinField + ' FROM ' + this.table + this.selectedJoin + this.selectedCondition;
+        }
+        else {
+            query = 'SELECT ' + liestFields + ' FROM ' + this.table + this.selectedCondition;
+        }
         this.selectedFields = [];
         this.table = "";
         this.selectedCondition = "";

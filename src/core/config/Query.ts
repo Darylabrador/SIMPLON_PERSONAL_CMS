@@ -14,6 +14,8 @@ class Query {
     selectedFields: Array<any> = [];
     selectedCondition: string = "";
     selectedAction: string = "";
+    selectedJoin: string = "";
+    selectedJoinField: string = "";
 
     constructor(table: string, fields: Array<FieldInterface>) {
         this.table   = table;
@@ -29,11 +31,11 @@ class Query {
         let conditions:string = "";
 
         if(typeof args === 'object') {
-            conditions += " ( " + this.and(args) + " ) "
+            conditions += " ( " + this.table + '.' + this.and(args) + " ) "
         } else if(Array.isArray(args)) {
             args.map((arg: any, index:number) => {
-                if(arg && index === 0) conditions += " ( " +this.and(arg) + " ) " 
-                if(arg && index > 0) conditions += " OR "  +  " (" +this.and(arg) + " ) "    
+                if(arg && index === 0) conditions += " ( " + this.table + '.' + this.and(arg) + " ) " 
+                if(arg && index > 0) conditions += " OR "  +  " (" + this.table + '.' + this.and(arg) + " ) "    
             })
         }
 
@@ -80,6 +82,7 @@ class Query {
             arrayValues += `, '${vals[i]}'`;
         }
         
+        console.log(`INSERT INTO ${this.table} (${arrayField}) values (${arrayValues})`)
         return `INSERT INTO ${this.table} (${arrayField}) values (${arrayValues})`;
     }
 
@@ -102,6 +105,7 @@ class Query {
             arrayField += `, ${keys[i]} = '${vals[i]}'`;
         }
 
+        console.log(`UPDATE ${this.table} SET ${arrayField} WHERE ${conditionSearch}`)
         return `UPDATE ${this.table} SET ${arrayField} WHERE ${conditionSearch}`;
     }
 
@@ -114,14 +118,37 @@ class Query {
         for(let i = 1; i < keys2.length; i++) {
             conditionSearch += ` AND ${keys2[i]} = '${vals2[i]}'`;
         }
-
-        console.log(`DELETE FROM ${this.table} WHERE ${conditionSearch}`)
+        
         return `DELETE FROM ${this.table} WHERE ${conditionSearch}`;
     }
 
+    defineJoin(queryString: string) {
+        this.selectedJoin += queryString;
+    }
+
+    defineJoinField(joinFields: any = null){
+        if(joinFields) this.selectedJoinField += `, ${joinFields} `;
+    }
+
     toString() {
-        const liestFields:string = (this.selectedFields.length > 0) ? this.selectedFields.join(', ') : '*'
-        const query = 'SELECT '+ liestFields + ' FROM ' + this.table + this.selectedCondition;
+        const liestFields:string = (this.selectedFields.length > 0) ? this.selectedFields.join(`, `) : '*'
+        let query:string = "";
+
+        if(this.selectedJoin != "") {
+            const arrayFields: any = [];
+
+            this.fields.forEach(element => {
+                arrayFields.push(`${this.table}.${element.field} AS ${this.table}${element.field} `)
+            })
+
+            const arrayFieldSelect = arrayFields.join(', ');
+
+            query = 'SELECT '+ arrayFieldSelect +  this.selectedJoinField + ' FROM ' + this.table + this.selectedJoin + this.selectedCondition;
+        } else {
+            query = 'SELECT '+ liestFields + ' FROM ' + this.table + this.selectedCondition;
+        }
+
+
         this.selectedFields     = [];
         this.table              = "";
         this.selectedCondition  = "";

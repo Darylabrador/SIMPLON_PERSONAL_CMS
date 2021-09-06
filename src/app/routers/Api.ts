@@ -33,10 +33,10 @@ class Api {
 
 
         Router.get('/api/comments', CommentController.getComments)
-        Router.get('/api/comment/:id', CommentController.getSingleComment)
-        Router.post('/api/comment', CommentController.postComment);
-        Router.put('/api/comment/:id', CommentController.putComment);
-        Router.delete('/api/comment/:id', CommentController.deleteComment);
+        Router.get('/api/comments/:id', CommentController.getSingleComment)
+        Router.post('/api/comments', CommentController.postComment);
+        Router.put('/api/comments/:id', CommentController.putComment);
+        Router.delete('/api/comments/:id', CommentController.deleteComment);
     }
 }
 

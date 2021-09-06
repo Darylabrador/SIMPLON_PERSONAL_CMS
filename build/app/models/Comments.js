@@ -31,8 +31,8 @@ var Comment = /** @class */ (function (_super) {
         _this.table = 'comments';
         _this.fields = [
             { field: "id", type: FieldTypes_1.FieldTypes.Number },
-            { field: "article_id", type: FieldTypes_1.FieldTypes.Number },
             { field: "content", type: FieldTypes_1.FieldTypes.String },
+            { field: "article_id", type: FieldTypes_1.FieldTypes.Number },
         ];
         return _this;
     }
@@ -40,7 +40,7 @@ var Comment = /** @class */ (function (_super) {
 }(Model_1.default));
 var comment = new Comment('comments', [
     { field: "id", type: FieldTypes_1.FieldTypes.Number },
-    { field: "article_id", type: FieldTypes_1.FieldTypes.Number },
     { field: "content", type: FieldTypes_1.FieldTypes.String },
+    { field: "article_id", type: FieldTypes_1.FieldTypes.Number },
 ]);
 exports.default = comment;

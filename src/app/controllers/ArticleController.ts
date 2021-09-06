@@ -6,6 +6,7 @@
 import Request from "../../core/server/Request";
 import Viewer from "../../core/templating/Viewer";
 import Article from "../models/Article";
+import Comment from "../models/Comments";
 
 class ArticleController {
     public static async getArticles() {
