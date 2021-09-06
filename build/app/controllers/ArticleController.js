@@ -97,7 +97,7 @@ var ArticleController = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Article_1.default.findAll()];
+                        return [4 /*yield*/, Article_1.default.findAll({ id: 2 })];
                     case 1:
                         articles = _a.sent();
                         return [2 /*return*/, articles];
@@ -157,12 +157,32 @@ var ArticleController = /** @class */ (function () {
         });
     };
     ArticleController.postArticleHtml = function (request) {
-        console.log('post article in controller ', request.data);
-        return { test: "test post html" };
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, title, content, articles, error_6;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _b.trys.push([0, 3, , 4]);
+                        console.log('post article in controller ', request.data);
+                        _a = request.data.body, title = _a.title, content = _a.content;
+                        return [4 /*yield*/, Article_1.default.create({ title: title, content: content })];
+                    case 1:
+                        _b.sent();
+                        return [4 /*yield*/, Article_1.default.findAll()];
+                    case 2:
+                        articles = _b.sent();
+                        return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })];
+                    case 3:
+                        error_6 = _b.sent();
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
     };
     ArticleController.putArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, _a, title, content, error_6;
+            var data, id, _a, title, content, error_7;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -175,8 +195,8 @@ var ArticleController = /** @class */ (function () {
                         _b.sent();
                         return [2 /*return*/, { message: 'article was updated' }];
                     case 2:
-                        error_6 = _b.sent();
-                        console.log('Error in put article (api)', error_6);
+                        error_7 = _b.sent();
+                        console.log('Error in put article (api)', error_7);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -185,7 +205,7 @@ var ArticleController = /** @class */ (function () {
     };
     ArticleController.deleteArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, error_7;
+            var data, id, error_8;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -197,8 +217,8 @@ var ArticleController = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, { message: 'article was deleted' }];
                     case 2:
-                        error_7 = _a.sent();
-                        console.log('error in delete article (api)', error_7);
+                        error_8 = _a.sent();
+                        console.log('error in delete article (api)', error_8);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

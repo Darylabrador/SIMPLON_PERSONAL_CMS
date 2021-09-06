@@ -43,6 +43,7 @@ var Query = /** @class */ (function () {
     Query.prototype.and = function (args) {
         var conditions = "";
         var keys = Object.keys(args);
+        console.log(args, keys);
         if (keys && keys.length > 1) {
             keys.map(function (key, index) {
                 if (key && index === 0)

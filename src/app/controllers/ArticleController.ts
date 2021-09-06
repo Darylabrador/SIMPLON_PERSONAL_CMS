@@ -31,7 +31,7 @@ class ArticleController {
 
     public static async getApiArticles() {
         try {     
-            const articles = await Article.findAll();
+            const articles = await Article.findAll({id: 2});
             return articles;
         } catch (error) {
             console.log('error in articles (api)', error)
@@ -64,9 +64,18 @@ class ArticleController {
         }
     }
 
-    public static postArticleHtml(request: Request) {
-        console.log('post article in controller ', request.data)
-        return {test: "test post html"};
+    public static async postArticleHtml(request: Request) {
+        try {
+            console.log('post article in controller ', request.data)
+            const {title, content} = request.data.body;
+            await Article.create({ title, content});
+
+            const articles = await Article.findAll();
+            return Viewer.render('templateObject', { articles })
+        } catch (error) {
+            
+        }
+
     }
 
     public static async putArticle(request: Request) {

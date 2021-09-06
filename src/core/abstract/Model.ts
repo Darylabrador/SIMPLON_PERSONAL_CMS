@@ -28,8 +28,8 @@ abstract class Model {
         let queryString: string = "";
         if (!data) {
             queryString = this.query.select(this.selection).from(this.table).toString()
-            console.log(this.jointure)
         } else {
+            console.log('data here')
             queryString = this.query.select(this.selection).from(this.table).where(data).toString()
         }
         return this.runQuery(queryString)

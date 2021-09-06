@@ -47,10 +47,12 @@ class Query {
         let conditions: string =  "";
         const keys:any = Object.keys(args);
 
+        console.log(args, keys)
+
         if(keys && keys.length > 1) {
             keys.map((key: any, index:number) => {
                 if(key && index === 0) conditions += key + " = " + args[key]
-                if(key && index > 0) conditions += " AND "  + key + " = '" + args[key] + "'"
+                if(key && index > 0) conditions += " AND " + key + " = '" + args[key] + "'"
             })
         } else{
             conditions += keys[0] + " = '" + args[keys[0]] + "'"
