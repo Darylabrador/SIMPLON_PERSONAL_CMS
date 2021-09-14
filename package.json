@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "rimraf ./build && tsc && cp -R ./src/app/views ./build/app/ && cp -R ./src/public ./build/",
+    "build": "rimraf ./build && tsc && cp -R ./src/app/views ./build/app/ && cp -R ./src/public ./build",
     "watch": "npm run build && nodemon build/app.js",
     "start": "npm run build && node build/app.js"
   },

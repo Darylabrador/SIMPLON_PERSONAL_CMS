@@ -66,15 +66,29 @@ var Server = /** @class */ (function () {
         return path === null || path === void 0 ? void 0 : path.slice(1)[path.length - 2];
     };
     Server.prototype.check = function (request, response) {
-        var _a;
+        var _a, _b, _c, _d, _e, _f, _g, _h;
         return __awaiter(this, void 0, void 0, function () {
             var baseURI, path, params, findRoute, data, viewContent, returningData, viewContent;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_j) {
+                switch (_j.label) {
                     case 0:
                         baseURI = url_1.default.parse(request.url, true);
                         path = (_a = baseURI.pathname) === null || _a === void 0 ? void 0 : _a.split('/');
                         params = this.getParams(path);
+                        if ((_b = baseURI.pathname) === null || _b === void 0 ? void 0 : _b.includes('.ejs'))
+                            response.setHeader({ 'Content-Type': 'text/html' });
+                        if ((_c = baseURI.pathname) === null || _c === void 0 ? void 0 : _c.includes('.html'))
+                            response.setHeader({ 'Content-Type': 'text/html' });
+                        if ((_d = baseURI.pathname) === null || _d === void 0 ? void 0 : _d.includes('.css'))
+                            response.setHeader({ 'Content-Type': 'text/css' });
+                        if ((_e = baseURI.pathname) === null || _e === void 0 ? void 0 : _e.includes('.js'))
+                            response.setHeader({ 'Content-Type': 'text/javascript' });
+                        if ((_f = baseURI.pathname) === null || _f === void 0 ? void 0 : _f.includes('.png'))
+                            response.setHeader({ 'Content-Type': 'image/png' });
+                        if ((_g = baseURI.pathname) === null || _g === void 0 ? void 0 : _g.includes('.jpg'))
+                            response.setHeader({ 'Content-Type': 'image/jpg' });
+                        if ((_h = baseURI.pathname) === null || _h === void 0 ? void 0 : _h.includes('.gif'))
+                            response.setHeader({ 'Content-Type': 'image/gif' });
                         findRoute = Router_1.default.getAll().find(function (element) {
                             return (element.url.match(baseURI.path) && element.method == request.method) ||
                                 (element.url.match(element.regexp, params) && element.url.replace(element.regexp, params) == baseURI.path && element.method == request.method);
@@ -83,7 +97,7 @@ var Server = /** @class */ (function () {
                         if (!(typeof findRoute.callback === "function")) return [3 /*break*/, 2];
                         return [4 /*yield*/, findRoute.callback(request)];
                     case 1:
-                        data = _b.sent();
+                        data = _j.sent();
                         if (data) {
                             if (typeof data == "string") {
                                 response.handler(data);
@@ -101,12 +115,12 @@ var Server = /** @class */ (function () {
                                 response.handler({ entries: returningData });
                             }
                         }
-                        _b.label = 2;
+                        _j.label = 2;
                     case 2: return [3 /*break*/, 4];
                     case 3:
                         viewContent = Viewer_1.default.render("error", {});
                         response.handler(viewContent);
-                        _b.label = 4;
+                        _j.label = 4;
                     case 4: return [2 /*return*/];
                 }
             });

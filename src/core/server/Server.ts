@@ -34,6 +34,15 @@ class Server {
         let baseURI = url.parse(request.url, true);
         let path = baseURI.pathname?.split('/');
         let params = this.getParams(path);
+        
+        if(baseURI.pathname?.includes('.ejs')) response.setHeader({ 'Content-Type' : 'text/html'});
+        if(baseURI.pathname?.includes('.html')) response.setHeader({ 'Content-Type' : 'text/html'});
+        if(baseURI.pathname?.includes('.css')) response.setHeader({ 'Content-Type' : 'text/css'});
+        if(baseURI.pathname?.includes('.js')) response.setHeader({ 'Content-Type' : 'text/javascript'});
+        if(baseURI.pathname?.includes('.png')) response.setHeader({ 'Content-Type' : 'image/png'});
+        if(baseURI.pathname?.includes('.jpg')) response.setHeader({ 'Content-Type' : 'image/jpg'});
+        if(baseURI.pathname?.includes('.gif')) response.setHeader({ 'Content-Type' : 'image/gif'});
+
 
         let findRoute = Router.getAll().find(element =>
             (element.url.match(baseURI.path) && element.method == request.method) ||

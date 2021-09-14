@@ -1,12 +1,4 @@
 "use strict";
-/**
- * Response
- *
- * This file is used to handle response from server
- * It will set the correct header and response depending view params
- * @module core/server/Response
- * @author Daryl ABRADOR
- */
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -25,9 +17,10 @@ var Response = /** @class */ (function () {
         this.SERVER_RESPONSE = response;
     }
     ;
-    Response.prototype.setHeader = function () {
-        if (typeof this.saveContent == ResponseTypeEnum_1.ResponseTypeEnum.String)
-            this.SERVER_RESPONSE.writeHead(200, { 'Content-Type': 'text/html' });
+    Response.prototype.setHeader = function (customHeader) {
+        if (customHeader === void 0) { customHeader = null; }
+        if (customHeader)
+            this.SERVER_RESPONSE.writeHead(200, customHeader);
         else if (typeof this.saveContent === ResponseTypeEnum_1.ResponseTypeEnum.Object)
             this.SERVER_RESPONSE.setHeader('Content-Type', 'application/json');
     };

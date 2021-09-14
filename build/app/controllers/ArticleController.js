@@ -103,7 +103,7 @@ var ArticleController = /** @class */ (function () {
                     case 1:
                         // const articles = await Article.findAll();
                         _a.sent();
-                        return [4 /*yield*/, Article_1.default.findAll({ "comments.id": 1 })];
+                        return [4 /*yield*/, Article_1.default.findAll({ "articles.id": 1 })];
                     case 2:
                         articles = _a.sent();
                         return [2 /*return*/, articles];

@@ -6,6 +6,9 @@
  * @module core/server/Response
  * @author Daryl ABRADOR
  */
+ import * as ejs     from "ejs";
+ import * as fs      from "fs";
+ import * as path    from "path";
 
 import { ServerResponse } from 'http';
 import { ResponseTypeEnum } from '../enum/ResponseTypeEnum';
@@ -18,8 +21,8 @@ class Response {
         this.SERVER_RESPONSE = response;
     };
 
-    public setHeader() {
-        if (typeof this.saveContent == ResponseTypeEnum.String) this.SERVER_RESPONSE.writeHead(200, { 'Content-Type': 'text/html' });
+    public setHeader(customHeader: any = null) {
+        if (customHeader) this.SERVER_RESPONSE.writeHead(200, customHeader);
         else if (typeof this.saveContent === ResponseTypeEnum.Object) this.SERVER_RESPONSE.setHeader('Content-Type', 'application/json');
     }
 
