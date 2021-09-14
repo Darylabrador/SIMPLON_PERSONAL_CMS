@@ -9,8 +9,6 @@ import ModelInterface from "../../core/interfaces/ModelInterface";
 import FieldInterface from "../../core/interfaces/FieldInterface";
 import { FieldTypes } from "../../core/enum/FieldTypes";
 
-import comment from "./Comments";
-
 class Article extends Model implements ModelInterface {
     table: string = 'articles';
     fields: Array<FieldInterface> = [
@@ -25,7 +23,5 @@ const article = new Article('articles', [
     { field: "title", type: FieldTypes.String },
     { field: "content", type: FieldTypes.String },
 ]);
-
-article.defineJoin(comment);
 
 export default article;

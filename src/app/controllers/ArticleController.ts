@@ -8,6 +8,8 @@ import Viewer from "../../core/templating/Viewer";
 import Article from "../models/Article";
 import Comment from "../models/Comments";
 
+
+
 class ArticleController {
     public static async getArticles() {
         try {     
@@ -17,7 +19,7 @@ class ArticleController {
             console.log('error in articles (html)', error)
         }
     }
-
+    
     public static async getSingleArticle(request: Request) {
         try {
             const  { data }  = request;
@@ -28,10 +30,12 @@ class ArticleController {
             console.log('error in single article (html)', error)
         }
     }
-
+    
     public static async getApiArticles() {
         try {     
-            const articles = await Article.findAll({id: 2});
+            // const articles = await Article.findAll();
+            await Article.defineJoin(Comment);
+            const articles = await Article.findAll({"articles.id": 1});
             return articles;
         } catch (error) {
             console.log('error in articles (api)', error)

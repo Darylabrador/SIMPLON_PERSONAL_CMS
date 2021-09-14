@@ -26,14 +26,14 @@ var Query = /** @class */ (function () {
         var _this = this;
         var conditions = "";
         if (typeof args === 'object') {
-            conditions += " ( " + this.table + '.' + this.and(args) + " ) ";
+            conditions += " ( " + this.and(args) + " ) ";
         }
         else if (Array.isArray(args)) {
             args.map(function (arg, index) {
                 if (arg && index === 0)
-                    conditions += " ( " + _this.table + '.' + _this.and(arg) + " ) ";
+                    conditions += " ( " + _this.and(arg) + " ) ";
                 if (arg && index > 0)
-                    conditions += " OR " + " (" + _this.table + '.' + _this.and(arg) + " ) ";
+                    conditions += " OR " + " (" + _this.and(arg) + " ) ";
             });
         }
         if (conditions !== "")
@@ -43,7 +43,6 @@ var Query = /** @class */ (function () {
     Query.prototype.and = function (args) {
         var conditions = "";
         var keys = Object.keys(args);
-        console.log(args, keys);
         if (keys && keys.length > 1) {
             keys.map(function (key, index) {
                 if (key && index === 0)
@@ -106,6 +105,11 @@ var Query = /** @class */ (function () {
         }
         return "DELETE FROM " + this.table + " WHERE " + conditionSearch;
     };
+    /**
+     * Model format after join :
+     *
+     * modelnamefield
+     */
     Query.prototype.defineJoin = function (queryString) {
         this.selectedJoin += queryString;
     };
@@ -129,6 +133,8 @@ var Query = /** @class */ (function () {
         else {
             query = 'SELECT ' + liestFields + ' FROM ' + this.table + this.selectedCondition;
         }
+        this.selectedJoin = "";
+        this.selectedJoinField = "";
         this.selectedFields = [];
         this.table = "";
         this.selectedCondition = "";

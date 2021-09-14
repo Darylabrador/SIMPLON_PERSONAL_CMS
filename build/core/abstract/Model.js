@@ -69,7 +69,6 @@ var Model = /** @class */ (function () {
             queryString = this.query.select(this.selection).from(this.table).toString();
         }
         else {
-            console.log('data here');
             queryString = this.query.select(this.selection).from(this.table).where(data).toString();
         }
         return this.runQuery(queryString);
@@ -174,6 +173,11 @@ var Model = /** @class */ (function () {
     Model.prototype.setJoin = function (queryString) {
         this.query.defineJoin(queryString);
     };
+    /**
+     * Model format after join :
+     *
+     * modelnamefield
+     */
     Model.prototype.defineJoin = function (model) {
         var _this = this;
         var arrayFields = [];

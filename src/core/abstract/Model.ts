@@ -29,7 +29,6 @@ abstract class Model {
         if (!data) {
             queryString = this.query.select(this.selection).from(this.table).toString()
         } else {
-            console.log('data here')
             queryString = this.query.select(this.selection).from(this.table).where(data).toString()
         }
         return this.runQuery(queryString)
@@ -101,6 +100,11 @@ abstract class Model {
         this.query.defineJoin(queryString)
     }
 
+    /**
+     * Model format after join :
+     * 
+     * modelnamefield
+     */
     public defineJoin(model: any) {
         const arrayFields: any = [];
 

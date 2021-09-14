@@ -31,11 +31,11 @@ class Query {
         let conditions:string = "";
 
         if(typeof args === 'object') {
-            conditions += " ( " + this.table + '.' + this.and(args) + " ) "
+            conditions += " ( " + this.and(args) + " ) "
         } else if(Array.isArray(args)) {
             args.map((arg: any, index:number) => {
-                if(arg && index === 0) conditions += " ( " + this.table + '.' + this.and(arg) + " ) " 
-                if(arg && index > 0) conditions += " OR "  +  " (" + this.table + '.' + this.and(arg) + " ) "    
+                if(arg && index === 0) conditions += " ( " +  this.and(arg) + " ) " 
+                if(arg && index > 0) conditions += " OR "  +  " (" +  this.and(arg) + " ) "    
             })
         }
 
@@ -46,9 +46,7 @@ class Query {
     and(args: any) {
         let conditions: string =  "";
         const keys:any = Object.keys(args);
-
-        console.log(args, keys)
-
+        
         if(keys && keys.length > 1) {
             keys.map((key: any, index:number) => {
                 if(key && index === 0) conditions += key + " = " + args[key]
@@ -124,6 +122,11 @@ class Query {
         return `DELETE FROM ${this.table} WHERE ${conditionSearch}`;
     }
 
+    /**
+     * Model format after join :
+     * 
+     * modelnamefield
+     */
     defineJoin(queryString: string) {
         this.selectedJoin += queryString;
     }
@@ -150,7 +153,8 @@ class Query {
             query = 'SELECT '+ liestFields + ' FROM ' + this.table + this.selectedCondition;
         }
 
-
+        this.selectedJoin       = "";
+        this.selectedJoinField = "";
         this.selectedFields     = [];
         this.table              = "";
         this.selectedCondition  = "";

@@ -45,6 +45,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var Viewer_1 = __importDefault(require("../../core/templating/Viewer"));
 var Article_1 = __importDefault(require("../models/Article"));
+var Comments_1 = __importDefault(require("../models/Comments"));
 var ArticleController = /** @class */ (function () {
     function ArticleController() {
     }
@@ -96,16 +97,21 @@ var ArticleController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Article_1.default.findAll({ id: 2 })];
+                        _a.trys.push([0, 3, , 4]);
+                        // const articles = await Article.findAll();
+                        return [4 /*yield*/, Article_1.default.defineJoin(Comments_1.default)];
                     case 1:
+                        // const articles = await Article.findAll();
+                        _a.sent();
+                        return [4 /*yield*/, Article_1.default.findAll({ "comments.id": 1 })];
+                    case 2:
                         articles = _a.sent();
                         return [2 /*return*/, articles];
-                    case 2:
+                    case 3:
                         error_3 = _a.sent();
                         console.log('error in articles (api)', error_3);
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
                 }
             });
         });
