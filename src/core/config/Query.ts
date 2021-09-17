@@ -30,14 +30,27 @@ class Query {
     where(args: any) {
         let conditions:string = "";
 
-        if(typeof args === 'object') {
-            conditions += " ( " + this.and(args) + " ) "
-        } else if(Array.isArray(args)) {
-            args.map((arg: any, index:number) => {
-                if(arg && index === 0) conditions += " ( " +  this.and(arg) + " ) " 
-                if(arg && index > 0) conditions += " OR "  +  " (" +  this.and(arg) + " ) "    
-            })
+        if(Array.isArray(args)) {
+            if(args.length > 1) {
+                if(args[0][2].includes('%')) args[0][2] = `'${args[0][2]}'`
+                conditions += " " + args[0][0] + " " + args[0][1] + " " + args[0][2] +  " "
+
+                for (let index = 1; index < args.length; index++) {
+                    if(args[index][0].includes('%')) args[index][0] = `'${args[index][0]}'`
+                    conditions += " AND " + args[index][0] + " " + args[index][1] + " " + args[index][2] +  " "
+                }
+
+            } else {
+                args.forEach(element => {
+                    if(element[2].includes('%')) element[2] = `'${element[2]}'`
+                    conditions += " " + element[0] + " " + element[1] + " " + element[2] +  " "
+                })
+            }
         }
+
+        if(typeof args === 'object' && !Array.isArray(args)) {
+            conditions += " " + this.and(args) + " "
+        } 
 
         if(conditions !== "") this.selectedCondition += " WHERE " + conditions;
         return this;
@@ -136,8 +149,6 @@ class Query {
     }
 
     toString() {
-        console.log(this.selectedCondition);
-        
         const liestFields:string = (this.selectedFields.length > 0) ? this.selectedFields.join(`, `) : '*'
         let query:string = "";
 
@@ -156,7 +167,7 @@ class Query {
         }
 
         this.selectedJoin       = "";
-        this.selectedJoinField = "";
+        this.selectedJoinField  = "";
         this.selectedFields     = [];
         this.table              = "";
         this.selectedCondition  = "";

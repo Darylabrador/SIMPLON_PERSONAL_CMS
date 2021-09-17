@@ -23,18 +23,28 @@ var Query = /** @class */ (function () {
         return this;
     };
     Query.prototype.where = function (args) {
-        var _this = this;
         var conditions = "";
-        if (typeof args === 'object') {
-            conditions += " ( " + this.and(args) + " ) ";
+        if (Array.isArray(args)) {
+            if (args.length > 1) {
+                if (args[0][2].includes('%'))
+                    args[0][2] = "'" + args[0][2] + "'";
+                conditions += " " + args[0][0] + " " + args[0][1] + " " + args[0][2] + " ";
+                for (var index = 1; index < args.length; index++) {
+                    if (args[index][0].includes('%'))
+                        args[index][0] = "'" + args[index][0] + "'";
+                    conditions += " AND " + args[index][0] + " " + args[index][1] + " " + args[index][2] + " ";
+                }
+            }
+            else {
+                args.forEach(function (element) {
+                    if (element[2].includes('%'))
+                        element[2] = "'" + element[2] + "'";
+                    conditions += " " + element[0] + " " + element[1] + " " + element[2] + " ";
+                });
+            }
         }
-        else if (Array.isArray(args)) {
-            args.map(function (arg, index) {
-                if (arg && index === 0)
-                    conditions += " ( " + _this.and(arg) + " ) ";
-                if (arg && index > 0)
-                    conditions += " OR " + " (" + _this.and(arg) + " ) ";
-            });
+        if (typeof args === 'object' && !Array.isArray(args)) {
+            conditions += " " + this.and(args) + " ";
         }
         if (conditions !== "")
             this.selectedCondition += " WHERE " + conditions;
@@ -120,7 +130,6 @@ var Query = /** @class */ (function () {
     };
     Query.prototype.toString = function () {
         var _this = this;
-        console.log(this.selectedCondition);
         var liestFields = (this.selectedFields.length > 0) ? this.selectedFields.join(", ") : '*';
         var query = "";
         if (this.selectedJoin != "") {
@@ -134,6 +143,7 @@ var Query = /** @class */ (function () {
         else {
             query = 'SELECT ' + liestFields + ' FROM ' + this.table + this.selectedCondition;
         }
+        console.log(query);
         this.selectedJoin = "";
         this.selectedJoinField = "";
         this.selectedFields = [];

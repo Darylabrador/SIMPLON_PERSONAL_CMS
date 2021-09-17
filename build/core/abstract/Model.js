@@ -177,10 +177,11 @@ var Model = /** @class */ (function () {
     /**
      * Model format after join :
      *
-     * modelnamefield
+     * Ex :
+     *
+     * Article.defineJoin(['comments', 'comments.article_id', '=', 'articles.id', 'articles'])
      */
-    Model.prototype.defineJoin = function (model) {
-        var _this = this;
+    Model.prototype.defineJoin = function (model, fields) {
         var arrayFields = [];
         model.fields.forEach(function (element) {
             if (!element.field.includes('_id')) {
@@ -189,11 +190,7 @@ var Model = /** @class */ (function () {
         });
         var arrayFieldSelect = arrayFields.join(', ');
         this.query.defineJoinField(arrayFieldSelect);
-        model.fields.forEach(function (element) {
-            if (element.field.includes('_id')) {
-                _this.setJoin(" LEFT JOIN " + model.table + " ON " + _this.table + "." + _this.fields[0].field + " = " + model.table + "." + element.field);
-            }
-        });
+        this.setJoin(" LEFT JOIN " + fields[0] + " ON " + fields[1] + " " + fields[2] + " " + fields[3] + " ");
         return this;
     };
     return Model;

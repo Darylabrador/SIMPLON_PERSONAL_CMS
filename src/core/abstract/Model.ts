@@ -104,26 +104,22 @@ abstract class Model {
     /**
      * Model format after join :
      * 
-     * modelnamefield
+     * Ex : 
+     * 
+     * Article.defineJoin(['comments', 'comments.article_id', '=', 'articles.id', 'articles'])
      */
-    public defineJoin(model: any) {
+    public defineJoin(model: any, fields: any) {
         const arrayFields: any = [];
-
+        
         model.fields.forEach((element: any) => {
             if(!element.field.includes('_id')){
                 arrayFields.push(` ${model.table}.${element.field} AS ${model.table}${element.field} `) 
             }
         })
-
+        
         const arrayFieldSelect = arrayFields.join(', ');
         this.query.defineJoinField(arrayFieldSelect)
-
-        model.fields.forEach((element: any) => {
-            if(element.field.includes('_id')) {
-                this.setJoin(` LEFT JOIN ${model.table} ON ${this.table}.${this.fields[0].field} = ${model.table}.${element.field}`)
-            }
-        });
-
+        this.setJoin(` LEFT JOIN ${fields[0]} ON ${fields[1]} ${fields[2]} ${fields[3]} `)
         return this;
     }
 }

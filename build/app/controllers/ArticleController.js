@@ -96,7 +96,7 @@ var ArticleController = /** @class */ (function () {
             var articles;
             return __generator(this, function (_a) {
                 try {
-                    articles = Article_1.default.defineJoin(Comments_1.default).findAll({ "articles.content": "like % le %" });
+                    articles = Article_1.default.defineJoin(Comments_1.default, ['comments', 'comments.article_id', '=', 'articles.id', 'articles']).findAll([['comments.content', 'LIKE', "%contenu%"], ['comments.id', '=', 1]]);
                     return [2 /*return*/, articles];
                 }
                 catch (error) {
