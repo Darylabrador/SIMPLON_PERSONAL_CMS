@@ -6,10 +6,6 @@
  * @module core/server/Response
  * @author Daryl ABRADOR
  */
- import * as ejs     from "ejs";
- import * as fs      from "fs";
- import * as path    from "path";
-
 import { ServerResponse } from 'http';
 import { ResponseTypeEnum } from '../enum/ResponseTypeEnum';
 

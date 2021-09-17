@@ -120,6 +120,7 @@ var Query = /** @class */ (function () {
     };
     Query.prototype.toString = function () {
         var _this = this;
+        console.log(this.selectedCondition);
         var liestFields = (this.selectedFields.length > 0) ? this.selectedFields.join(", ") : '*';
         var query = "";
         if (this.selectedJoin != "") {

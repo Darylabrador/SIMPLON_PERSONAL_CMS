@@ -34,8 +34,7 @@ class ArticleController {
     public static async getApiArticles() {
         try {     
             // const articles = await Article.findAll();
-            await Article.defineJoin(Comment);
-            const articles = await Article.findAll({"articles.id": 1});
+            const articles = Article.defineJoin(Comment).findAll({"articles.id": 1})
             return articles;
         } catch (error) {
             console.log('error in articles (api)', error)

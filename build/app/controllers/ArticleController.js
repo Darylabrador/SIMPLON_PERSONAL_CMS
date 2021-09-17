@@ -93,32 +93,22 @@ var ArticleController = /** @class */ (function () {
     };
     ArticleController.getApiArticles = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var articles, error_3;
+            var articles;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        // const articles = await Article.findAll();
-                        return [4 /*yield*/, Article_1.default.defineJoin(Comments_1.default)];
-                    case 1:
-                        // const articles = await Article.findAll();
-                        _a.sent();
-                        return [4 /*yield*/, Article_1.default.findAll({ "articles.id": 1 })];
-                    case 2:
-                        articles = _a.sent();
-                        return [2 /*return*/, articles];
-                    case 3:
-                        error_3 = _a.sent();
-                        console.log('error in articles (api)', error_3);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                try {
+                    articles = Article_1.default.defineJoin(Comments_1.default).findAll({ "articles.content": "like % le %" });
+                    return [2 /*return*/, articles];
                 }
+                catch (error) {
+                    console.log('error in articles (api)', error);
+                }
+                return [2 /*return*/];
             });
         });
     };
     ArticleController.getApiSingleArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, articles, error_4;
+            var data, id, articles, error_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -130,8 +120,8 @@ var ArticleController = /** @class */ (function () {
                         articles = _a.sent();
                         return [2 /*return*/, articles];
                     case 2:
-                        error_4 = _a.sent();
-                        console.log('error in single article (api)', error_4);
+                        error_3 = _a.sent();
+                        console.log('error in single article (api)', error_3);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -143,7 +133,7 @@ var ArticleController = /** @class */ (function () {
     };
     ArticleController.postArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, title, content, createdArticle, error_5;
+            var _a, title, content, createdArticle, error_4;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -154,8 +144,8 @@ var ArticleController = /** @class */ (function () {
                         createdArticle = _b.sent();
                         return [2 /*return*/, { id: createdArticle.insertId, title: title, content: content }];
                     case 2:
-                        error_5 = _b.sent();
-                        console.log('error in post article (api)', error_5);
+                        error_4 = _b.sent();
+                        console.log('error in post article (api)', error_4);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -164,7 +154,7 @@ var ArticleController = /** @class */ (function () {
     };
     ArticleController.postArticleHtml = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, title, content, articles, error_6;
+            var _a, title, content, articles, error_5;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -179,7 +169,7 @@ var ArticleController = /** @class */ (function () {
                         articles = _b.sent();
                         return [2 /*return*/, Viewer_1.default.render('templateObject', { articles: articles })];
                     case 3:
-                        error_6 = _b.sent();
+                        error_5 = _b.sent();
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -188,7 +178,7 @@ var ArticleController = /** @class */ (function () {
     };
     ArticleController.putArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, _a, title, content, error_7;
+            var data, id, _a, title, content, error_6;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -201,8 +191,8 @@ var ArticleController = /** @class */ (function () {
                         _b.sent();
                         return [2 /*return*/, { message: 'article was updated' }];
                     case 2:
-                        error_7 = _b.sent();
-                        console.log('Error in put article (api)', error_7);
+                        error_6 = _b.sent();
+                        console.log('Error in put article (api)', error_6);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }
@@ -211,7 +201,7 @@ var ArticleController = /** @class */ (function () {
     };
     ArticleController.deleteArticle = function (request) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, id, error_8;
+            var data, id, error_7;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -223,8 +213,8 @@ var ArticleController = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, { message: 'article was deleted' }];
                     case 2:
-                        error_8 = _a.sent();
-                        console.log('error in delete article (api)', error_8);
+                        error_7 = _a.sent();
+                        console.log('error in delete article (api)', error_7);
                         return [3 /*break*/, 3];
                     case 3: return [2 /*return*/];
                 }

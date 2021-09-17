@@ -15,7 +15,15 @@ class Viewer {
 
     public static render(filename: string, entries: object) {
         const rootFolder   =  path.resolve('./');
-        const templatePath =  path.join(rootFolder, 'build', 'app', 'views', `${filename}.ejs`);
+        
+        let templatePath =  path.join(rootFolder, 'build', 'app', 'views', `${filename}.ejs`);
+
+        try {
+            fs.accessSync(templatePath);
+        } catch (error) {
+            templatePath =  path.join(rootFolder, 'build', 'core', 'views', `${filename}.ejs`);
+        }
+
         const values = { ...entries };
         const template = fs.readFileSync(templatePath, 'utf8');
         return ejs.render(template, values);

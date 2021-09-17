@@ -136,6 +136,8 @@ class Query {
     }
 
     toString() {
+        console.log(this.selectedCondition);
+        
         const liestFields:string = (this.selectedFields.length > 0) ? this.selectedFields.join(`, `) : '*'
         let query:string = "";
 

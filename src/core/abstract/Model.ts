@@ -15,8 +15,9 @@ abstract class Model {
     fields: Array<FieldInterface> = [];
 
     query: Query;
-    selection: any = []
+    selection: any = [];
     jointure: string = "";
+    whereArray: any = [];
 
     constructor(table: string, fields: Array<FieldInterface>) {
         this.table = table;
@@ -122,6 +123,8 @@ abstract class Model {
                 this.setJoin(` LEFT JOIN ${model.table} ON ${this.table}.${this.fields[0].field} = ${model.table}.${element.field}`)
             }
         });
+
+        return this;
     }
 }
 

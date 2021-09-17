@@ -58,6 +58,7 @@ var Model = /** @class */ (function () {
         this.fields = [];
         this.selection = [];
         this.jointure = "";
+        this.whereArray = [];
         this.table = table;
         this.fields = fields;
         this.query = new Query_1.default(table, fields);
@@ -193,6 +194,7 @@ var Model = /** @class */ (function () {
                 _this.setJoin(" LEFT JOIN " + model.table + " ON " + _this.table + "." + _this.fields[0].field + " = " + model.table + "." + element.field);
             }
         });
+        return this;
     };
     return Model;
 }());
